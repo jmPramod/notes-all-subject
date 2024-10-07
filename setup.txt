@@ -1,0 +1,11 @@
+npm i --save-dev typescript @types/express @types/node
+> npx tsc --init
+npm install -g ts-node
+
+Foe msSQL
+ npm i msnodesqlv8
+ npm i mssql --save
+ npm install @types/mssql --save-dev
+
+for psql
+npm i pg @types/pg

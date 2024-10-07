@@ -1,0 +1,33 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Banking API Documentation",
+    "description": "API documentation for banking operations",
+    "version": "1.0.0"
+  },
+  "basePath": "https://chatgpt.com/",
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
+    },
+    {
+      "url": "https://production-api.example.com",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Endpoints for user authentication"
+    },
+    {
+      "name": "Banks",
+      "description": "Endpoints for banking operations"
+    },
+    {
+      "name": "Transactions",
+      "description": "Endpoints for financial transactions"
+    }
+  ]
+}

@@ -10,6 +10,8 @@ export interface Notes extends Document {
   questionNumber: number;
   links: string[];
   important: string;
+
+  difference: { diff: string; ans: string }[];
 }
 
 const notesSchema: Schema = new Schema(
@@ -19,7 +21,7 @@ const notesSchema: Schema = new Schema(
     answer: { ans: { type: [String] }, format: { type: String } },
     query: { type: [String] },
     favorite: { type: Boolean, default: false },
-
+    difference: [{ diff: String, ans: String }],
     questionNumber: { type: Number },
     links: { type: [String] },
     important: {

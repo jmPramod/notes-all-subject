@@ -1,9 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
@@ -24,8 +23,8 @@ import { fetchSubject } from "../utils/Api.services";
 
 // }
 const page = () => {
-  let Text = "React";
-  let data = [
+  const Text = "React";
+  const data = [
     {
       subject: "test",
       question: "name plese",
@@ -146,13 +145,14 @@ const page = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      let payload = {
+      const payload = {
         subject: Text,
         page: 0,
         limit: 10,
       };
       await fetchSubject(payload);
     };
+    fetchData();
   }, []);
   return (
     <div>

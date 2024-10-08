@@ -12,7 +12,7 @@ export const notesRoute = express.Router();
 
 notesRoute.post("/create-notes", verifyUser, createNotes);
 
-notesRoute.get("/get-notes", verifyUser, getNotes);
+notesRoute.get("/get-notes/:sub", verifyUser, getNotes);
 
 notesRoute.patch("/update-notes/:id", verifyUser, editNotes);
 

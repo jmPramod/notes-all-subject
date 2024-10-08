@@ -19,7 +19,25 @@ const createNotes = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 const getNotes = async (req: Request, res: Response, next: NextFunction) => {
+  const subject = req.params.sub;
+
+  const page = parseInt(req.query.page as string) || 1;
+  const limit = parseInt(req.query.limit as string) || 10;
   try {
+    const items = await Notes.find({ subject })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const totalItems = await Notes.countDocuments();
+    const totalPages = Math.ceil(totalItems / limit);
+    res.status(200).json({
+      message: `Data related to ${subject} fetched`,
+      page,
+      totalPages,
+      totalItems,
+      items,
+      status: 200,
+    });
   } catch (error) {
     next(error);
   }

@@ -4,14 +4,14 @@ export interface Notes extends Document {
   subject: string;
   question: string;
   answer: { ans: string[]; format: string };
-  query: string[];
+  ansQuery: string[];
   favorite: boolean;
   screenshort: { Url: string; PublicId: string | null }[];
   questionNumber: number;
   links: string[];
   important: string;
 
-  difference: { diff: string; ans: string }[];
+  ansDifference: { diff: string; ans: string }[];
 }
 
 const notesSchema: Schema = new Schema(
@@ -19,9 +19,9 @@ const notesSchema: Schema = new Schema(
     subject: { type: String },
     question: { type: String },
     answer: { ans: { type: [String] }, format: { type: String } },
-    query: { type: [String] },
+    ansQuery: { type: [String] },
     favorite: { type: Boolean, default: false },
-    difference: [{ diff: String, ans: String }],
+    ansDifference: [{ diff: String, ans: String }],
     questionNumber: { type: Number },
     links: { type: [String] },
     important: {
@@ -50,7 +50,7 @@ const notesValidationSchema = Joi.object({
     ans: Joi.array().items(Joi.string()).required(),
     format: Joi.string().optional(),
   }).required(),
-  query: Joi.array().items(Joi.string()).optional(),
+  ansQuery: Joi.array().items(Joi.string()).optional(),
   favorite: Joi.boolean().default(false),
   questionNumber: Joi.number().required(),
   links: Joi.array().items(Joi.string()).optional(),

@@ -30,12 +30,11 @@ const getNotes = async (req: Request, res: Response, next: NextFunction) => {
 
     const totalItems = await Notes.countDocuments();
     const totalPages = Math.ceil(totalItems / limit);
+    const info = { page, totalPages, totalItems };
     res.status(200).json({
       message: `Data related to ${subject} fetched`,
-      page,
-      totalPages,
-      totalItems,
-      items,
+      info,
+      data: items,
       status: 200,
     });
   } catch (error) {

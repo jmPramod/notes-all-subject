@@ -11,7 +11,7 @@ export interface Notes extends Document {
   links: string[];
   important: string;
 
-  ansDifference: { diff: string; ans: string }[];
+  ansDifference: { diff: string[]; ans: string }[];
 }
 
 const notesSchema: Schema = new Schema(

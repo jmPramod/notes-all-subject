@@ -11,7 +11,7 @@ export interface Notes extends Document {
   links: string[];
   important: string;
 
-  table: { heading: string[]; body: string[] };
+  table: { heading: string[]; body: string[][] };
 }
 
 const notesSchema: Schema = new Schema(
@@ -21,7 +21,7 @@ const notesSchema: Schema = new Schema(
     answer: { ans: { type: [String] }, format: { type: String } },
     ansQuery: { ans: { type: [String] }, format: { type: String } },
     favorite: { type: Boolean, default: false },
-    table: { heading: { type: [String] }, body: { type: [String] } },
+    table: { heading: { type: [String] }, body: { type: [[String]] } },
     questionNumber: { type: Number },
     links: { type: [String] },
     important: {

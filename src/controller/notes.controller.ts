@@ -4,13 +4,14 @@ import Notes from "../models/notes.schema"; // , { notesValidationSchema }
 import createError from "../middlewear/error.middlewear";
 const createNotes = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const count = await Notes.find(req.body.subject).countDocuments();
+    const count = await Notes.find({
+      subject: req.body.subject,
+    }).countDocuments();
     if (count) {
       req.body.questionNumber = count + 1;
     } else {
       req.body.questionNumber = 1;
     }
-    console.log("req.body.questionNumber ", req.body.questionNumber);
 
     let data = new Notes(req.body);
     const result = await data.save();
@@ -91,7 +92,16 @@ const getDistintSubject = async (
   next: NextFunction
 ) => {
   try {
+    const result = await Notes.distinct("subject");
+    if (!result) {
+      return next(createError(400, "no subject avalable"));
+    }
+    res.status(200).json({
+      message: "Distint subject fetched",
+      data: result,
+      status: 200,
+    });
   } catch (error) {}
 };
 
-export { createNotes, getNotes, editNotes, deleteNotes };
+export { createNotes, getNotes, editNotes, deleteNotes, getDistintSubject };

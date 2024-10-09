@@ -17,6 +17,7 @@ export const ErrorHandelingMiddlewear = (
     status: status,
     message: errorMessage,
     data: null,
+    error: errorMessage,
     stacks: err.stack,
   });
 };

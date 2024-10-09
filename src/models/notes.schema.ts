@@ -11,7 +11,7 @@ export interface Notes extends Document {
   links: string[];
   important: string;
 
-  ansDifference: [];
+  ansDifference: { heading: []; ans: [] };
 }
 
 const notesSchema: Schema = new Schema(
@@ -19,9 +19,9 @@ const notesSchema: Schema = new Schema(
     subject: { type: String },
     question: { type: String },
     answer: { ans: { type: [String] }, format: { type: String } },
-    ansQuery: { type: [String], format: { type: String } },
+    ansQuery: { ans: { type: [String] }, format: { type: String } },
     favorite: { type: Boolean, default: false },
-    ansDifference: [],
+    ansDifference: { heading: [], ans: [] },
     questionNumber: { type: Number },
     links: { type: [String] },
     important: {

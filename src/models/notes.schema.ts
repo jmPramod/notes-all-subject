@@ -4,7 +4,7 @@ export interface Notes extends Document {
   subject: string;
   question: string;
   answer: { ans: string[]; format: string };
-  ansQuery: string[];
+  ansQuery: { ans: string[]; format: string };
   favorite: boolean;
   screenshort: { Url: string; PublicId: string | null }[];
   questionNumber: number;

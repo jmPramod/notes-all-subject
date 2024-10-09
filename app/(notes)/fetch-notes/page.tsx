@@ -37,11 +37,14 @@ const page = () => {
   const [listData, setListData] = useState<any>([]);
   const [listCategory, setListCategory] = useState<any>([]);
   const [selectedSubject, setSelectedSubject] = useState("");
+  const [pageValue, setPageValue] = useState(0);
+  const [pagelimit, setLimitValue] = useState(10);
+  const [errorMessage, setErrorMessage] = useState("");
   const handleOptionChange = async () => {
     const payload = {
       subject: selectedSubject,
-      page: 0,
-      limit: 10,
+      page: pagelimit,
+      limit: pageValue,
     };
     let d = await fetchSubjectList(payload);
     if (d?.status === 200) {
@@ -55,34 +58,26 @@ const page = () => {
     if (selectedSubject !== "") {
       handleOptionChange();
     }
-  }, [selectedSubject]);
+  }, [selectedSubject, pageValue, pagelimit]);
   useEffect(() => {
     const fetchData = async () => {
-      // const payload = {
-      //   subject: Text,
-      //   page: 0,
-      //   limit: 10,
-      // };
       let e = await fetchSubjectCategory();
 
-      // let d = await fetchSubjectList(payload);
       if (e?.status === 200) {
-        // setListData(d.data);
         setListCategory(e?.data);
-        // console.log(d.data);
+      } else {
+        setErrorMessage(e.message || "fetching data failed. Please try again.");
       }
     };
     fetchData();
   }, []);
-  const comparisonData = [
-    { personName: "Alice", personAge: 25, location: "New York" },
-    { userName: "Bob", userAge: 30, city: "San Francisco" },
-    { fullName: "Charlie", age: 35, place: "Los Angeles" },
-  ];
+
   return (
     <div className="w-[95%] overflow-hidden">
       <div className="text-center max-w-[200px]">
-        {" "}
+        {errorMessage && (
+          <div className="text-red-500 text-center mb-4">{errorMessage}</div>
+        )}{" "}
         <Select
           onValueChange={setSelectedSubject} // defaultValue={field.value || "p"}
           defaultValue={selectedSubject}

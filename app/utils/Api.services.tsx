@@ -77,7 +77,7 @@ export const fetchSubjectCategory = async () => {
     };
   } catch (error: any) {
     return {
-      status: error.response.status,
+      status: error.response.status || 500,
       statusCode: error.response.data?.status,
       message: error.response.data.message,
       data: null,

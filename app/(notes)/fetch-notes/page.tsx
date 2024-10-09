@@ -193,6 +193,13 @@ const page = () => {
     };
     fetchData();
   }, []);
+  const comparisonData = [
+    { personName: "Alice", personAge: 25, location: "New York" },
+    { userName: "Bob", userAge: 30, city: "San Francisco" },
+    { fullName: "Charlie", age: 35, place: "Los Angeles" },
+  ];
+
+  const keys = Array.from(new Set(data.flatMap(Object.keys)));
   return (
     <div className="w-[95%] overflow-hidden">
       <div className="text-center max-w-[200px]">

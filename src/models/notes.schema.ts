@@ -21,7 +21,7 @@ const notesSchema: Schema = new Schema(
     answer: { ans: { type: [String] }, format: { type: String } },
     ansQuery: { type: [String], format: { type: String } },
     favorite: { type: Boolean, default: false },
-    ansDifference: [{ diff: { type: String }, format: { type: String } }],
+    ansDifference: [{ diff: { type: [String] }, format: { type: String } }],
     questionNumber: { type: Number },
     links: { type: [String] },
     important: {

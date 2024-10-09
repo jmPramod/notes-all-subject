@@ -63,7 +63,7 @@ const page = () => {
         title: result?.message,
       });
     }
-
+    form.reset();
     // Handle form submission, e.g., send data to an API
   };
 

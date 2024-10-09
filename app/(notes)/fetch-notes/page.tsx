@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -10,7 +10,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import SummaryDetail from "./SummaryDetail";
-import { fetchSubject } from "../utils/Api.services";
+import {
+  fetchSubjectCategory,
+  fetchSubjectList,
+} from "../../utils/Api.services";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // {
 //     "subject":"test",
@@ -24,6 +34,10 @@ import { fetchSubject } from "../utils/Api.services";
 // }
 const page = () => {
   const Text = "React";
+  const [listData, setListData] = useState<any>([]);
+
+  const [listCategory, setListCategory] = useState<any>([]);
+  const [selectedSubject, setSelectedSubject] = useState("");
   const data = [
     {
       subject: "test",
@@ -142,36 +156,94 @@ const page = () => {
   //       paymentMethod: "Credit Card",
   //     },
   //   ];
+  const handleOptionChange = async () => {
+    const payload = {
+      subject: selectedSubject,
+      page: 0,
+      limit: 10,
+    };
+    let d = await fetchSubjectList(payload);
+    if (d?.status === 200) {
+      setListData(d.data);
+      console.log(d.data);
+    }
+  };
+  useEffect(() => {
+    console.log("selectedSubject", selectedSubject);
 
+    if (selectedSubject !== "") {
+      handleOptionChange();
+    }
+  }, [selectedSubject]);
   useEffect(() => {
     const fetchData = async () => {
-      const payload = {
-        subject: Text,
-        page: 0,
-        limit: 10,
-      };
-      await fetchSubject(payload);
+      // const payload = {
+      //   subject: Text,
+      //   page: 0,
+      //   limit: 10,
+      // };
+      let e = await fetchSubjectCategory();
+
+      // let d = await fetchSubjectList(payload);
+      if (e?.status === 200) {
+        // setListData(d.data);
+        setListCategory(e?.data);
+        // console.log(d.data);
+      }
     };
     fetchData();
   }, []);
   return (
-    <div>
-      <div className="text-center">React </div>
+    <div className="w-[95%] overflow-hidden">
+      <div className="text-center max-w-[200px]">
+        {" "}
+        <Select
+          onValueChange={setSelectedSubject} // defaultValue={field.value || "p"}
+          defaultValue={selectedSubject}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select Subject" />
+          </SelectTrigger>
+          <SelectContent position="popper">
+            {listCategory.map((subject: any, index: number) => (
+              <SelectItem key={index} value={subject}>
+                {subject}
+              </SelectItem>
+            ))}{" "}
+          </SelectContent>
+        </Select>{" "}
+      </div>
       <Table>
         {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Sl No</TableHead>
+            <TableHead className="w-[150px]">Sl No</TableHead>
             {/* <TableHead>Status</TableHead> */}
             <TableHead>Question</TableHead>
             <TableHead className="text-right">Amount</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((val: any, index: number) => (
-            <>
-              <SummaryDetail val={val} index={index} />
-            </>
+          {listData.map((val: any, index: number) => (
+            <TableRow key={index}>
+              <TableCell className="font-medium ">
+                {val.questionNumber}
+              </TableCell>
+              <TableCell className="font-medium  w-full">
+                {/* {val.question} */}
+                {/* <p onClick={() => setExpand(!expand)}>hai</p> */}
+                <SummaryDetail listData={val} />
+              </TableCell>
+              {/* <TableCell
+              //  onClick={() => setExpand(!expand)}
+              >
+                arrow
+              </TableCell> */}
+              {/* <TableCell className="text-right"> */}
+              {/* {invoice.totalAmount} */}
+              {/* </TableCell> */}
+              <TableCell className=" text-right">Edit</TableCell>
+            </TableRow>
           ))}
         </TableBody>
         <TableFooter>

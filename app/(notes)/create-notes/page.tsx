@@ -120,109 +120,87 @@ const page = () => {
               </FormItem>
             )}
           />
+          <div className="flex w-full gap-3">
+            <FormField
+              control={form.control}
+              name="answer.ans"
+              render={({ field }) => (
+                <FormItem className="w-1/2">
+                  <FormLabel>Answers</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Enter your Answer" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="answer.ans"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Answers</FormLabel>
-                <FormControl>
-                  {/* <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select an answer" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectItem value="answer1">Answer 1</SelectItem>
-                    <SelectItem value="answer2">Answer 2</SelectItem>
-                    <SelectItem value="answer3">Answer 3</SelectItem>
-                  </SelectContent>
-                </Select> */}
-                  <Textarea placeholder="Enter your Answer" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="answer.format"
+              render={({ field }) => (
+                <FormItem className="w-1/2">
+                  <FormLabel>Format</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value || "p"}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select format" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        <SelectItem value="li">List</SelectItem>
+                        <SelectItem value="p">Paragraph</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
-          <FormField
-            control={form.control}
-            name="answer.format"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Format</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value || "p"}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select format" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="li">List</SelectItem>
-                      <SelectItem value="p">Paragraph</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="ansQuery.ans"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Answers</FormLabel>
-                <FormControl>
-                  {/* <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select an answer" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectItem value="answer1">Answer 1</SelectItem>
-                    <SelectItem value="answer2">Answer 2</SelectItem>
-                    <SelectItem value="answer3">Answer 3</SelectItem>
-                  </SelectContent>
-                </Select> */}
-                  <Textarea placeholder="Enter your Answer" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex w-full gap-3">
+            <FormField
+              control={form.control}
+              name="ansQuery.ans"
+              render={({ field }) => (
+                <FormItem className="w-1/2">
+                  <FormLabel>Query</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Enter your Answer" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="ansQuery.format"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Format</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value || "p"}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select format" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="li">List</SelectItem>
-                      <SelectItem value="p">Paragraph</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="ansQuery.format"
+              render={({ field }) => (
+                <FormItem className="w-1/2">
+                  <FormLabel>Format</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value || "p"}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select format" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        <SelectItem value="li">List</SelectItem>
+                        <SelectItem value="p">Paragraph</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <TableDynamic
             tableInfo={tableInfo}
             setTableInfo={setTableInfo}

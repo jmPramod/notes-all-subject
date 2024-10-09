@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 interface TableInfo {
   heading: string[];
@@ -82,60 +84,79 @@ const TableDynamic = (props: TableDynamicProps) => {
     console.log("tableInfo", tableInfo);
   }, [tableInfo]);
   return (
-    <div>
-      <p onClick={addColumn}>Add Column</p>
-      <p onClick={deleteColumn}>Delete Column</p>
-      <p onClick={addRow}>Add Row</p>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {tableInfo.heading.map((header, i) => (
-              <TableHead key={i}>
-                <Input
-                  type="text"
-                  placeholder="Enter the Header"
-                  value={header}
-                  onChange={(e) => handleHeaderChange(i, e.target.value)}
-                />
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {tableInfo.body.map((row, rowIndex) => (
-            <TableRow key={rowIndex}>
-              {row.map((cell, cellIndex) => (
-                <TableCell key={cellIndex}>
-                  <Textarea
-                    placeholder="Enter the value"
-                    value={cell}
-                    onChange={(e) =>
-                      handleCellChange(rowIndex, cellIndex, e.target.value)
-                    }
+    <div className="flex flex-col gap-5">
+      <div>
+        <Label>Table</Label>
+        <div className="flex gap-4">
+          <Button className="bg-gray-500" onClick={addRow}>
+            Add Row
+          </Button>
+          <Button className="bg-gray-500" onClick={addColumn}>
+            Add Column
+          </Button>
+          <Button onClick={deleteColumn} variant="destructive">
+            Delete Column
+          </Button>
+        </div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              {tableInfo.heading.map((header, i) => (
+                <TableHead key={i}>
+                  <Input
+                    type="text"
+                    placeholder="Enter the Header"
+                    value={header}
+                    onChange={(e) => handleHeaderChange(i, e.target.value)}
                   />
-                </TableCell>
+                </TableHead>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-
-      <p onClick={addLink}>Add Link</p>
-      <Table>
-        <TableBody>
-          {link.map((linkValue, rowIndex) => (
-            <TableRow key={rowIndex}>
-              <TableCell>
-                <Input
-                  type="text"
-                  value={linkValue}
-                  onChange={(e) => handleLinkChange(rowIndex, e.target.value)}
-                />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {tableInfo.body.map((row, rowIndex) => (
+              <TableRow key={rowIndex}>
+                {row.map((cell, cellIndex) => (
+                  <TableCell key={cellIndex}>
+                    <Textarea
+                      placeholder="Enter the value"
+                      value={cell}
+                      onChange={(e) =>
+                        handleCellChange(rowIndex, cellIndex, e.target.value)
+                      }
+                    />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      <div>
+        <Label>Table</Label>
+        <div>
+          <Button className="bg-gray-500" onClick={addLink}>
+            Click to Add Link
+          </Button>
+          <Table>
+            <TableBody>
+              {link.map((linkValue, rowIndex) => (
+                <TableRow key={rowIndex}>
+                  <TableCell>
+                    <Input
+                      type="text"
+                      value={linkValue}
+                      onChange={(e) =>
+                        handleLinkChange(rowIndex, e.target.value)
+                      }
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
     </div>
   );
 };

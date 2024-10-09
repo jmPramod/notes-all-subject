@@ -15,7 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 const SummaryDetail = (props: any) => {
-  console.log("props,props", props.listData.ansDifference);
+  console.log("props,props", props.listData.table);
 
   return (
     <Accordion
@@ -31,12 +31,12 @@ const SummaryDetail = (props: any) => {
               props.listData.answer.ans.map((v: any, i: number) => (
                 <div>{v}</div>
               ))}
-            {props && props.listData.ansDifference?.heading.length > 0 && (
+            {props && props.listData.table?.heading.length > 0 && (
               <Table>
                 <TableHeader>
                   <TableRow>
                     {props &&
-                      props.listData.ansDifference?.heading?.map(
+                      props.listData.table?.heading?.map(
                         (val: any, index: number) => (
                           <>
                             <TableHead>{val}</TableHead>
@@ -47,19 +47,16 @@ const SummaryDetail = (props: any) => {
                 </TableHeader>
                 {/* <TableBody> */}
                 <TableBody>
-                  {props.listData.ansDifference?.ans.map(
-                    (val: any, index: number) => (
-                      <TableRow key={index}>
-                        {Object.keys(val)
-                          .filter((key) => key !== "_id") // Exclude _id
-                          .map((key, i) => (
-                            <TableCell key={i} className="font-medium">
-                              {val[key]}
-                            </TableCell>
+                  {props &&
+                    props.listData.table?.body.map(
+                      (val: any, index: number) => (
+                        <TableRow key={index}>
+                          {val.map((v: any, i: number) => (
+                            <TableCell className="font-medium">{v}</TableCell>
                           ))}
-                      </TableRow>
-                    )
-                  )}
+                        </TableRow>
+                      )
+                    )}
                 </TableBody>
               </Table>
             )}

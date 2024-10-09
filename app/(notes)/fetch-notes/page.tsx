@@ -35,127 +35,8 @@ import {
 const page = () => {
   const Text = "React";
   const [listData, setListData] = useState<any>([]);
-
   const [listCategory, setListCategory] = useState<any>([]);
   const [selectedSubject, setSelectedSubject] = useState("");
-  const data = [
-    {
-      subject: "test",
-      question: "name plese",
-      answer: { ans: "pj", format: "list" },
-      query: "",
-
-      questionNumber: 1,
-      links: [],
-    },
-    {
-      subject: "test",
-      question: "name plese",
-      answer: { ans: "pj", format: "list" },
-      query: "",
-
-      questionNumber: 1,
-      links: [],
-    },
-    {
-      subject: "test",
-      question: "name plese",
-      answer: { ans: "pj", format: "list" },
-      query: "",
-
-      questionNumber: 1,
-      links: [],
-    },
-    {
-      subject: "test",
-      question: "name plese",
-      answer: { ans: "pj", format: "list" },
-      query: "",
-
-      questionNumber: 1,
-      links: [],
-    },
-    {
-      subject: "test",
-      question: "name plese",
-      answer: { ans: "pj", format: "list" },
-      query: "",
-
-      questionNumber: 1,
-      links: [],
-    },
-    {
-      subject: "test",
-      question: "name plese",
-      answer: { ans: "pj", format: "list" },
-      query: "",
-
-      questionNumber: 1,
-      links: [],
-    },
-    {
-      subject: "test",
-      question: "name plese",
-      answer: { ans: "pj", format: "list" },
-      query: "",
-
-      questionNumber: 1,
-      links: [],
-    },
-    {
-      subject: "test",
-      question: "name plese",
-      answer: { ans: "pj", format: "list" },
-      query: "",
-
-      questionNumber: 1,
-      links: [],
-    },
-  ];
-  //   const invoices = [
-  //     {
-  //       invoice: "INV001",
-  //       paymentStatus: "Paid",
-  //       totalAmount: "$250.00",
-  //       paymentMethod: "Credit Card",
-  //     },
-  //     {
-  //       invoice: "INV002",
-  //       paymentStatus: "Pending",
-  //       totalAmount: "$150.00",
-  //       paymentMethod: "PayPal",
-  //     },
-  //     {
-  //       invoice: "INV003",
-  //       paymentStatus: "Unpaid",
-  //       totalAmount: "$350.00",
-  //       paymentMethod: "Bank Transfer",
-  //     },
-  //     {
-  //       invoice: "INV004",
-  //       paymentStatus: "Paid",
-  //       totalAmount: "$450.00",
-  //       paymentMethod: "Credit Card",
-  //     },
-  //     {
-  //       invoice: "INV005",
-  //       paymentStatus: "Paid",
-  //       totalAmount: "$550.00",
-  //       paymentMethod: "PayPal",
-  //     },
-  //     {
-  //       invoice: "INV006",
-  //       paymentStatus: "Pending",
-  //       totalAmount: "$200.00",
-  //       paymentMethod: "Bank Transfer",
-  //     },
-  //     {
-  //       invoice: "INV007",
-  //       paymentStatus: "Unpaid",
-  //       totalAmount: "$300.00",
-  //       paymentMethod: "Credit Card",
-  //     },
-  //   ];
   const handleOptionChange = async () => {
     const payload = {
       subject: selectedSubject,
@@ -198,8 +79,6 @@ const page = () => {
     { userName: "Bob", userAge: 30, city: "San Francisco" },
     { fullName: "Charlie", age: 35, place: "Los Angeles" },
   ];
-
-  const keys = Array.from(new Set(data.flatMap(Object.keys)));
   return (
     <div className="w-[95%] overflow-hidden">
       <div className="text-center max-w-[200px]">

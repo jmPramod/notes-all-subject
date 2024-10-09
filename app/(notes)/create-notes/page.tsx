@@ -26,7 +26,13 @@ import { createQuestions } from "@/app/utils/Api.services";
 import { Textarea } from "@/components/ui/textarea";
 import { ToastNotification } from "@/components/ToastMessage/ToastNotification";
 import { useToast } from "@/hooks/use-toast";
+import TableDynamic from "./TableDynamic";
+import { useState } from "react";
 
+interface TableInfo {
+  heading: string[];
+  body: string[][];
+}
 const formSchema = z.object({
   subject: z.string().min(2, {
     message: "Subject must be at least 2 characters.",
@@ -35,9 +41,12 @@ const formSchema = z.object({
     message: "Question must be at least 2 characters.",
   }),
   answer: z.object({
-    ans: z.string().min(1, {
-      message: "At least one answer is required.",
-    }),
+    ans: z
+      .string()
+      .min(1, {
+        message: "At least one answer is required.",
+      })
+      .optional(),
     format: z.string().optional(),
   }),
 });
@@ -50,10 +59,21 @@ const page = () => {
       subject: "",
       question: "",
       answer: { ans: "", format: "p" },
+      ansQuery: { ans: "", format: "p" },
+      // favorite: false,
+      // questionNumber: 0,
+      // links: [],
+      // important: "white",
+      // screenshort:""
     },
   });
-
+  const [tableInfo, setTableInfo] = useState<TableInfo>({
+    heading: [],
+    body: [[]],
+  });
+  const [link, setLink] = useState<string[]>([]);
   const onSubmit = async (data: any) => {
+    data = { ...data, table: tableInfo, link: link };
     console.log("Form submitted:", data);
 
     const result = await createQuestions(data);
@@ -64,7 +84,6 @@ const page = () => {
       });
     }
     form.reset();
-    // Handle form submission, e.g., send data to an API
   };
 
   return (
@@ -153,7 +172,63 @@ const page = () => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="ansQuery.ans"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Answers</FormLabel>
+                <FormControl>
+                  {/* <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select an answer" />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    <SelectItem value="answer1">Answer 1</SelectItem>
+                    <SelectItem value="answer2">Answer 2</SelectItem>
+                    <SelectItem value="answer3">Answer 3</SelectItem>
+                  </SelectContent>
+                </Select> */}
+                  <Textarea placeholder="Enter your Answer" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
+          <FormField
+            control={form.control}
+            name="ansQuery.format"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Format</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value || "p"}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select format" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectItem value="li">List</SelectItem>
+                      <SelectItem value="p">Paragraph</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <TableDynamic
+            tableInfo={tableInfo}
+            setTableInfo={setTableInfo}
+            setLink={setLink}
+            link={link}
+          />
           <Button type="submit">Submit</Button>
         </form>
       </Form>

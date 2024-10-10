@@ -21,6 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { PaginationPage } from "./PaginationPage";
 
 // {
 //     "subject":"test",
@@ -35,25 +37,27 @@ import {
 const page = () => {
   const Text = "React";
   const [listData, setListData] = useState<any>([]);
-  const [listCategory, setListCategory] = useState<any>([]);
+  const [listCategory, setListCategory] = useState<any>();
   const [selectedSubject, setSelectedSubject] = useState("");
-  const [pageValue, setPageValue] = useState(0);
+  const [info, setInfo] = useState<any>();
+  const [pageValue, setPageValue] = useState(1);
   const [pagelimit, setLimitValue] = useState(10);
   const [errorMessage, setErrorMessage] = useState("");
   const handleOptionChange = async () => {
     const payload = {
       subject: selectedSubject,
-      page: pagelimit,
-      limit: pageValue,
+      page: pageValue,
+      limit: pagelimit,
     };
     let d = await fetchSubjectList(payload);
     if (d?.status === 200) {
       setListData(d.data);
       console.log(d.data);
+      setInfo(d.info);
     }
   };
   useEffect(() => {
-    console.log("selectedSubject", selectedSubject);
+    console.log("selectedSubject", selectedSubject, info);
 
     if (selectedSubject !== "") {
       handleOptionChange();
@@ -86,11 +90,12 @@ const page = () => {
             <SelectValue placeholder="Select Subject" />
           </SelectTrigger>
           <SelectContent position="popper">
-            {listCategory.map((subject: any, index: number) => (
-              <SelectItem key={index} value={subject}>
-                {subject}
-              </SelectItem>
-            ))}{" "}
+            {listCategory &&
+              listCategory.map((subject: any, index: number) => (
+                <SelectItem key={index} value={subject}>
+                  {subject}
+                </SelectItem>
+              ))}{" "}
           </SelectContent>
         </Select>{" "}
       </div>
@@ -129,11 +134,24 @@ const page = () => {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={3}>Pagination</TableCell>
             {/* <TableCell className="text-right">Edit</TableCell> */}
           </TableRow>
         </TableFooter>
       </Table>
+      {/* Total Page<Button>{info && info.totalPages}</Button>
+      <div className="flex  gap-5">
+        <Button>Next</Button>
+
+        <Button>Prev</Button> 
+      </div> */}
+      {info && (
+        <PaginationPage
+          info={info}
+          setLimitValue={setLimitValue}
+          setPageValue={setPageValue}
+          setInfo={setInfo}
+        />
+      )}
     </div>
   );
 };

@@ -22,6 +22,7 @@ export const fetchSubjectList = async (payload: fetchSubjectListPayload) => {
       statusCode: res.data.status,
       message: res.data.message,
       data: res.data.data,
+      info: res.data.info,
     };
   } catch (error: any) {
     return {

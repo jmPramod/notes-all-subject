@@ -3,12 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,29 +20,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { createQuestions } from "@/app/utils/Api.services";
+import {
+  createQuestions,
+  fetchSubjectCategory,
+} from "@/app/utils/Api.services";
 import { Textarea } from "@/components/ui/textarea";
-import { ToastNotification } from "@/components/ToastMessage/ToastNotification";
 import { useToast } from "@/hooks/use-toast";
 import TableDynamic from "./TableDynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface TableInfo {
   heading: string[];
   body: string[][];
 }
+
 const formSchema = z.object({
-  subject: z.string().optional(),
-  question: z.string().optional(),
+  subject: z.string().nonempty({ message: "Subject is mandatory." }),
+  question: z.string().nonempty({ message: "Question is mandatory." }),
   answer: z.object({
     ans: z.string().optional(),
     format: z.string().optional(),
   }),
 });
 
-const page = () => {
+const Page = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  const [listCategory, setListCategory] = useState<string[]>([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isAddingNewSubject, setIsAddingNewSubject] = useState(false);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,18 +56,15 @@ const page = () => {
       question: "",
       answer: { ans: "", format: "p" },
       ansQuery: { ans: "", format: "p" },
-      // favorite: false,
-      // questionNumber: 0,
-      // links: [],
-      // important: "white",
-      // screenshort:""
     },
   });
+
   const [tableInfo, setTableInfo] = useState<TableInfo>({
     heading: [],
     body: [[]],
   });
   const [link, setLink] = useState<string[]>([]);
+
   const onSubmit = async (data: any) => {
     setLoading(true);
     data = { ...data, table: tableInfo, link: link };
@@ -80,21 +81,29 @@ const page = () => {
     setLoading(false);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      let e = await fetchSubjectCategory();
+
+      if (e?.status === 200) {
+        setListCategory(e?.data);
+      } else {
+        setErrorMessage(e.message || "Fetching data failed. Please try again.");
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="w-[80%] m-auto p-5 flex flex-col gap-9">
-      <h1 className="text-2xl font-bold">Create Notes </h1>
+      <h1 className="text-2xl font-bold">Create Notes</h1>
 
-      <TableDynamic
-        tableInfo={tableInfo}
-        setTableInfo={setTableInfo}
-        setLink={setLink}
-        link={link}
-      />
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="   flex flex-col gap-9"
+          className="flex flex-col gap-9"
         >
+          {/* Subject Field */}
           <FormField
             control={form.control}
             name="subject"
@@ -102,7 +111,49 @@ const page = () => {
               <FormItem>
                 <FormLabel>Subject</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter subject" {...field} />
+                  {isAddingNewSubject ? (
+                    <div className="flex items-center">
+                      <Input
+                        placeholder="Enter new subject"
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                        }}
+                      />
+                      <Button
+                        type="button"
+                        onClick={() => setIsAddingNewSubject(false)}
+                        className="ml-2"
+                        variant="outline"
+                      >
+                        ✖
+                      </Button>
+                    </div>
+                  ) : (
+                    <Select
+                      onValueChange={(value) => {
+                        if (value === "new") {
+                          setIsAddingNewSubject(true);
+                          field.onChange(""); // Clear value to allow new input
+                        } else {
+                          field.onChange(value);
+                        }
+                      }}
+                      defaultValue={field.value || ""}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select subject" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        {listCategory?.map((category, index) => (
+                          <SelectItem key={index} value={category}>
+                            {category}
+                          </SelectItem>
+                        ))}
+                        <SelectItem value="new">Add New Subject</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -203,6 +254,13 @@ const page = () => {
               )}
             />
           </div>
+
+          <TableDynamic
+            tableInfo={tableInfo}
+            setTableInfo={setTableInfo}
+            setLink={setLink}
+            link={link}
+          />
           <Button type="submit">{loading ? "Submitting...." : "Submit"}</Button>
         </form>
       </Form>
@@ -210,4 +268,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

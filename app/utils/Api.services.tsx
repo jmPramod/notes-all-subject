@@ -18,15 +18,15 @@ export const fetchSubjectList = async (payload: fetchSubjectListPayload) => {
     console.log("res", res);
 
     return {
-      status: res.status,
-      statusCode: res.data.status,
+      status: res?.status,
+      statusCode: res.data?.status,
       message: res.data.message,
       data: res.data.data,
       info: res.data.info,
     };
   } catch (error: any) {
     return {
-      status: error.response.status,
+      status: error.response?.status,
       statusCode: error.response.data?.status,
       message: error.response.data.message,
       data: null,
@@ -44,14 +44,14 @@ export const createQuestions = async (payload: fetchSubjectListPayload) => {
     console.log("res", res);
 
     return {
-      status: res.status,
-      statusCode: res.data.status,
+      status: res?.status,
+      statusCode: res.data?.status,
       message: res.data.message,
       data: res.data.data,
     };
   } catch (error: any) {
     return {
-      status: error.response.status,
+      status: error.response?.status,
       statusCode: error.response.data?.status,
       message: error.response.data.message,
       data: null,
@@ -69,14 +69,14 @@ export const fetchSubjectCategory = async () => {
     console.log("res", res);
 
     return {
-      status: res.status,
-      statusCode: res.data.status,
+      status: res?.status,
+      statusCode: res.data?.status,
       message: res.data.message,
       data: res.data.data,
     };
   } catch (error: any) {
     return {
-      status: error.response.status || 500,
+      status: error.response?.status || 500,
       statusCode: error.response.data?.status,
       message: error.response.data.message,
       data: null,
@@ -90,15 +90,15 @@ export const login = async (payload: { email: string; password: string }) => {
     console.log("res", res);
 
     return {
-      status: res.status,
-      statusCode: res.data.status,
+      status: res?.status,
+      statusCode: res.data?.status,
       message: res.data.message,
       data: res.data.data,
       token: res.data.token,
     };
   } catch (error: any) {
     return {
-      status: error.response.status,
+      status: error.response?.status,
       statusCode: error.response.data?.status,
       message: error.response.data.message,
       data: null,

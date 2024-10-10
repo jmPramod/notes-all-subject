@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-
 import {
   Table,
   TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
   TableHead,
-  TableHeader,
   TableRow,
+  TableCell,
+  TableHeader,
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,6 +16,7 @@ interface TableInfo {
   heading: string[];
   body: string[][];
 }
+
 interface TableDynamicProps {
   tableInfo: TableInfo;
   setTableInfo: React.Dispatch<React.SetStateAction<TableInfo>>;
@@ -28,6 +26,7 @@ interface TableDynamicProps {
 
 const TableDynamic = (props: TableDynamicProps) => {
   const { tableInfo, setTableInfo, link, setLink } = props;
+
   const addColumn = () => {
     setTableInfo((prev) => ({
       ...prev,
@@ -56,9 +55,17 @@ const TableDynamic = (props: TableDynamicProps) => {
     }));
   };
 
+  const deleteRow = (rowIndex: number) => {
+    setTableInfo((prev) => ({
+      ...prev,
+      body: prev.body.filter((_, index) => index !== rowIndex),
+    }));
+  };
+
   const addLink = () => {
     setLink((prev) => [...prev, ""]);
   };
+
   const handleLinkChange = (index: number, value: string) => {
     const newLinks = [...link];
     newLinks[index] = value;
@@ -80,22 +87,23 @@ const TableDynamic = (props: TableDynamicProps) => {
     newBody[rowIndex][cellIndex] = value;
     setTableInfo((prev) => ({ ...prev, body: newBody }));
   };
+
   useEffect(() => {
     console.log("tableInfo", tableInfo);
   }, [tableInfo]);
+
   return (
     <div className="flex flex-col gap-5">
       <div>
         <Label>Table</Label>
         <div className="flex gap-4">
-          <Button className="bg-gray-500" onClick={addColumn}>
+          <Button type="button" className="bg-gray-500" onClick={addColumn}>
             Add Column
           </Button>
-          <Button className="bg-gray-500" onClick={addRow}>
+          <Button type="button" className="bg-gray-500" onClick={addRow}>
             Add Row
           </Button>
-
-          <Button onClick={deleteColumn} variant="destructive">
+          <Button type="button" onClick={deleteColumn} variant="destructive">
             Delete Column
           </Button>
         </div>
@@ -128,15 +136,26 @@ const TableDynamic = (props: TableDynamicProps) => {
                     />
                   </TableCell>
                 ))}
+                {row.length > 0 && ( // Show Delete Row button only if the row exists
+                  <TableCell>
+                    <Button
+                      type="button"
+                      onClick={() => deleteRow(rowIndex)}
+                      variant="destructive"
+                    >
+                      Delete Row
+                    </Button>
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </div>
       <div>
-        <Label>Table</Label>
+        <Label>Links</Label>
         <div>
-          <Button className="bg-gray-500" onClick={addLink}>
+          <Button type="button" className="bg-gray-500" onClick={addLink}>
             Click to Add Link
           </Button>
           <Table>

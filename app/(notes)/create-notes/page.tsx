@@ -34,19 +34,10 @@ interface TableInfo {
   body: string[][];
 }
 const formSchema = z.object({
-  subject: z.string().min(2, {
-    message: "Subject must be at least 2 characters.",
-  }),
-  question: z.string().min(2, {
-    message: "Question must be at least 2 characters.",
-  }),
+  subject: z.string().optional(),
+  question: z.string().optional(),
   answer: z.object({
-    ans: z
-      .string()
-      .min(1, {
-        message: "At least one answer is required.",
-      })
-      .optional(),
+    ans: z.string().optional(),
     format: z.string().optional(),
   }),
 });

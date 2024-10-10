@@ -7,6 +7,7 @@ import {
   editNotes,
   deleteNotes,
   getDistintSubject,
+  updateDocuments,
 } from "../controller/notes.controller";
 
 export const notesRoute = express.Router();
@@ -20,3 +21,4 @@ notesRoute.patch("/update-notes/:id", verifyUser, editNotes);
 notesRoute.delete("/delete-notes/:id", verifyUser, deleteNotes);
 
 notesRoute.get("/get-subject", verifyUser, getDistintSubject);
+notesRoute.get("/omg", updateDocuments);

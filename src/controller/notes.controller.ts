@@ -104,4 +104,30 @@ const getDistintSubject = async (
   } catch (error) {}
 };
 
-export { createNotes, getNotes, editNotes, deleteNotes, getDistintSubject };
+async function updateDocuments() {
+  // try {
+  //   const documents = await Notes.find(); // Fetch all documents
+  //   let serial = 1; // Start from 1
+  //   for (const doc of documents) {
+  //     // Update the document with the incrementing number
+  //     doc.serialNumber = {
+  //       subject: "REACT",
+  //       SlNumber: serial, // Assign the incrementing number
+  //     };
+  //     await doc.save(); // Save each document
+  //     serial++; // Increment for the next document
+  //   }
+  //   console.log(`${documents.length} documents updated successfully!`);
+  // } catch (error) {
+  //   console.error("Error updating documents:", error);
+  // }
+}
+
+export {
+  createNotes,
+  getNotes,
+  editNotes,
+  deleteNotes,
+  getDistintSubject,
+  updateDocuments,
+};

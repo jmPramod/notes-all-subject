@@ -7,7 +7,7 @@ export interface Notes extends Document {
   ansQuery: { ans: string[]; format: string };
   favorite: boolean;
   screenshort: { Url: string; PublicId: string | null }[];
-  questionNumber: number;
+  serialNumber: { subject: string; SlNumber: number };
   links: string[];
   important: string;
 
@@ -22,7 +22,10 @@ const notesSchema: Schema = new Schema(
     ansQuery: { ans: { type: [String] }, format: { type: String } },
     favorite: { type: Boolean, default: false },
     table: { heading: { type: [String] }, body: { type: [[String]] } },
-    questionNumber: { type: Number },
+    serialNumber: {
+      subject: { type: String },
+      SlNumber: { type: Number || null, unique: true },
+    },
     links: { type: [String] },
     important: {
       type: String,
@@ -52,7 +55,7 @@ const notesValidationSchema = Joi.object({
   }).required(),
   ansQuery: Joi.array().items(Joi.string()).optional(),
   favorite: Joi.boolean().default(false),
-  questionNumber: Joi.number().required(),
+  serialNumber: Joi.number().required(),
   links: Joi.array().items(Joi.string()).optional(),
   important: Joi.string()
     .valid("red", "yellow", "gray", "white")

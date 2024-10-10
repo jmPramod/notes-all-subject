@@ -78,11 +78,19 @@ const page = () => {
   };
 
   return (
-    <>
+    <div className="w-[80%] m-auto p-5 flex flex-col gap-9">
+      <h1 className="text-2xl font-bold">Create Notes </h1>
+
+      <TableDynamic
+        tableInfo={tableInfo}
+        setTableInfo={setTableInfo}
+        setLink={setLink}
+        link={link}
+      />
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-[80%] m-auto p-5 flex flex-col gap-9"
+          className="   flex flex-col gap-9"
         >
           <FormField
             control={form.control}
@@ -192,16 +200,10 @@ const page = () => {
               )}
             />
           </div>
-          <TableDynamic
-            tableInfo={tableInfo}
-            setTableInfo={setTableInfo}
-            setLink={setLink}
-            link={link}
-          />
           <Button type="submit">Submit</Button>
         </form>
       </Form>
-    </>
+    </div>
   );
 };
 

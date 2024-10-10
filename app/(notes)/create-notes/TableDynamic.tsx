@@ -88,12 +88,13 @@ const TableDynamic = (props: TableDynamicProps) => {
       <div>
         <Label>Table</Label>
         <div className="flex gap-4">
-          <Button className="bg-gray-500" onClick={addRow}>
-            Add Row
-          </Button>
           <Button className="bg-gray-500" onClick={addColumn}>
             Add Column
           </Button>
+          <Button className="bg-gray-500" onClick={addRow}>
+            Add Row
+          </Button>
+
           <Button onClick={deleteColumn} variant="destructive">
             Delete Column
           </Button>

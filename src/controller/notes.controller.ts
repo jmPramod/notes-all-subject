@@ -83,7 +83,7 @@ const editNotes = async (req: Request, res: Response, next: NextFunction) => {
       new: true,
     });
     res.status(200).json({
-      message: "single data fetched succefully",
+      message: "single data Edited succefully",
       data: result,
       status: 200,
     });

@@ -44,6 +44,7 @@ const formSchema = z.object({
 
 const page = () => {
   const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -64,6 +65,7 @@ const page = () => {
   });
   const [link, setLink] = useState<string[]>([]);
   const onSubmit = async (data: any) => {
+    setLoading(true);
     data = { ...data, table: tableInfo, link: link };
     console.log("Form submitted:", data);
 
@@ -75,6 +77,7 @@ const page = () => {
       });
     }
     form.reset();
+    setLoading(false);
   };
 
   return (
@@ -200,7 +203,7 @@ const page = () => {
               )}
             />
           </div>
-          <Button type="submit">Submit</Button>
+          <Button type="submit">{loading ? "Submitting...." : "Submit"}</Button>
         </form>
       </Form>
     </div>

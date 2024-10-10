@@ -52,18 +52,36 @@ const getNotes = async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+const getSingleNotes = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    console.log("req.params._id", req.params.id);
+
+    const result = await Notes.findById(req.params.id);
+    if (!result) {
+      return next(createError(400, "Data is not present"));
+    }
+
+    res.status(200).json({
+      message: "single data fetched",
+      data: result,
+      status: 200,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 const editNotes = async (req: Request, res: Response, next: NextFunction) => {
   try {
     console.log("req.params._id", req.params.id);
 
-    const result = await Notes.findByIdAndUpdate(
-      { _id: req.params.id },
-      { $set: req.body },
-      { new: true }
-    );
+    const result = await Notes.findByIdAndUpdate({ _id: req.params.id });
     res.status(200).json({
-      message: "Question and  Ans  Updated  successfully.",
+      message: "single data fetched succefully",
       data: result,
       status: 200,
     });
@@ -130,4 +148,5 @@ export {
   deleteNotes,
   getDistintSubject,
   updateDocuments,
+  getSingleNotes,
 };

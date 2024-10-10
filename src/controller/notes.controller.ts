@@ -79,7 +79,9 @@ const editNotes = async (req: Request, res: Response, next: NextFunction) => {
   try {
     console.log("req.params._id", req.params.id);
 
-    const result = await Notes.findByIdAndUpdate({ _id: req.params.id });
+    const result = await Notes.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     res.status(200).json({
       message: "single data fetched succefully",
       data: result,

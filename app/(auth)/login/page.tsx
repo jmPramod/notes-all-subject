@@ -42,21 +42,19 @@ const LoginPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = async (data: any) => {
-    setLoading(true); // Set loading to true
-    setErrorMessage(""); // Reset error message
+  const onSubmit = async (data: { email: string; password: string }) => {
+    setLoading(true);
+    setErrorMessage("");
 
-    // Handle login, e.g., API call her
     const result = await login(data);
     if (result.status === 200) {
-      // Store token in local storage
       localStorage.setItem("token", result.token);
-      // Redirect to home page
-      router.push("/"); // Adjust the path as needed
+
+      router.push("/");
     } else {
       setErrorMessage(result.message || "Login failed. Please try again.");
     }
-    setLoading(false); // Set loading to false after request
+    setLoading(false);
   };
 
   return (

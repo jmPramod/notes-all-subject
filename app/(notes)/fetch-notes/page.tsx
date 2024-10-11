@@ -25,11 +25,14 @@ import { Button } from "@/components/ui/button";
 import { PaginationPage } from "./PaginationPage";
 import { Progress } from "@/components/ui/progress"; // Import your Progress component
 import { useRouter } from "next/navigation";
+import { subjectType } from "@/app/all.types";
 
 const Page = () => {
   const router = useRouter();
-  const [listData, setListData] = useState<any>([]);
-  const [listCategory, setListCategory] = useState<any>();
+  const [individualSubjectDataList, setIndividualSubjectDataList] = useState<
+    subjectType[]
+  >([]);
+  const [listCategory, setListCategory] = useState<string[]>([]);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [info, setInfo] = useState<any>();
   const [pageValue, setPageValue] = useState(1);
@@ -61,7 +64,7 @@ const Page = () => {
 
     let d = await fetchSubjectList(payload);
     if (d?.status === 200) {
-      setListData(d.data);
+      setIndividualSubjectDataList(d.data);
 
       setInfo(d.info);
     } else {
@@ -155,13 +158,13 @@ const Page = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {listData.map((val: any, index: number) => (
+              {individualSubjectDataList.map((val: any, index: number) => (
                 <TableRow key={index}>
                   <TableCell className="font-medium md:text-2xl">
                     {val?.serialNumber?.SlNumber}
                   </TableCell>
                   <TableCell className="font-medium  w-full">
-                    <SummaryDetail listData={val} />
+                    <SummaryDetail individualSubjectDataList={val} />
                   </TableCell>
                   <TableCell>
                     <Button

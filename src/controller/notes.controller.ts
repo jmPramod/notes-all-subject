@@ -7,6 +7,11 @@ const createNotes = async (req: Request, res: Response, next: NextFunction) => {
     const count = await Notes.find({
       subject: req.body.subject,
     }).countDocuments();
+    req.body.serialNumber = {
+      subject: req.body.subject,
+
+      SlNumber: 0,
+    };
     if (count) {
       req.body.questionNumber = count + 1;
       req.body.serialNumber.SlNumber = count + 1;
@@ -16,6 +21,7 @@ const createNotes = async (req: Request, res: Response, next: NextFunction) => {
       req.body.serialNumber.SlNumber = 1;
     }
 
+    console.log("req.bosy", req.body);
     let data = new Notes(req.body);
     const result = await data.save();
 
@@ -127,23 +133,47 @@ const getDistintSubject = async (
   } catch (error) {}
 };
 
+// async function updateDocuments() {
+//   try {
+//     const documents = await Notes.find(); // Fetch all documents
+//     let serial = 1; // Start from 1
+//     for (const doc of documents) {
+//       // Update the document with the incrementing number
+//       doc.serialNumber = {
+//         subject: "REACT",
+//         SlNumber: serial, // Assign the incrementing number
+//       };
+//       await doc.save(); // Save each document
+//       serial++; // Increment for the next document
+//     }
+//     console.log(`${documents.length} documents updated successfully!`);
+//   } catch (error) {
+//     console.error("Error updating documents:", error);
+//   }
+// }
 async function updateDocuments() {
-  // try {
-  //   const documents = await Notes.find(); // Fetch all documents
-  //   let serial = 1; // Start from 1
-  //   for (const doc of documents) {
-  //     // Update the document with the incrementing number
-  //     doc.serialNumber = {
-  //       subject: "REACT",
-  //       SlNumber: serial, // Assign the incrementing number
-  //     };
-  //     await doc.save(); // Save each document
-  //     serial++; // Increment for the next document
-  //   }
-  //   console.log(`${documents.length} documents updated successfully!`);
-  // } catch (error) {
-  //   console.error("Error updating documents:", error);
-  // }
+  try {
+    // const documents = await Notes.updateMany(
+    //   {},
+    //   { $unset: { "serialNumber.SlNumber": "" } }
+    // ); // Fetch all documents
+    // let serial = 1; // Start from 1
+
+    // for (const doc of documents) {
+    //   // Update the document with the incrementing number
+    //   doc.serialNumber = {
+    //     subject: "REACT",
+    //     SlNumber: serial, // Assign the incrementing number
+    //   };
+
+    //   await doc.save(); // Save each document
+    //   serial++; // Increment for the next document
+    // }
+
+    console.log(` documents updated successfully!`);
+  } catch (error) {
+    console.error("Error updating documents:", error);
+  }
 }
 
 export {

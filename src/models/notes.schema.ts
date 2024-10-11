@@ -24,7 +24,7 @@ const notesSchema: Schema = new Schema(
     table: { heading: { type: [String] }, body: { type: [[String]] } },
     serialNumber: {
       subject: { type: String },
-      SlNumber: { type: Number || null, unique: true },
+      SlNumber: { type: Number, default: 0 },
     },
     links: { type: [String] },
     important: {

@@ -44,6 +44,7 @@ const getNotes = async (req: Request, res: Response, next: NextFunction) => {
     console.log("item2", items2, subject);
 
     const items = await Notes.find({ subject })
+      .sort({ "serialNumber.SlNumber": 1 })
       .skip((page - 1) * limit)
       .limit(limit);
 

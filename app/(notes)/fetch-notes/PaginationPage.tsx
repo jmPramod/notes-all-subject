@@ -23,13 +23,13 @@ export function PaginationPage(props: any) {
   };
 
   return (
-    <Pagination>
+    <Pagination className="p-5">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
             href="#"
             onClick={() => handlePageChange(page - 1)}
-            className={page === 1 ? "disabled" : ""}
+            className={page === 1 ? "disabled md:text-2xl" : "md:text-2xl"}
           />
         </PaginationItem>
 
@@ -42,6 +42,7 @@ export function PaginationPage(props: any) {
                 href="#"
                 onClick={() => handlePageChange(pageNumber)}
                 isActive={pageNumber === page}
+                className="text-2xl"
               >
                 {pageNumber}
               </PaginationLink>
@@ -60,7 +61,9 @@ export function PaginationPage(props: any) {
           <PaginationNext
             href="#"
             onClick={() => handlePageChange(page + 1)}
-            className={page === totalPages ? "disabled" : ""}
+            className={
+              page === totalPages ? "disabled md:text-2xl" : "md:text-2xl"
+            }
           />
         </PaginationItem>
       </PaginationContent>

@@ -150,15 +150,15 @@ const Page = () => {
           <Table className="p-5">
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[150px]">Sl No</TableHead>
-                <TableHead>Question</TableHead>
-                <TableHead className="text-right">Action</TableHead>
+                <TableHead className="w-[200px]  md:text-2xl">Sl No</TableHead>
+                <TableHead className="md:text-2xl">Question</TableHead>
+                <TableHead className="text-right md:text-2xl">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {listData.map((val: any, index: number) => (
                 <TableRow key={index}>
-                  <TableCell className="font-medium ">
+                  <TableCell className="font-medium md:text-2xl">
                     {val?.serialNumber?.SlNumber}
                   </TableCell>
                   <TableCell className="font-medium  w-full">

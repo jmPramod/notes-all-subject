@@ -24,7 +24,9 @@ const SummaryDetail = (props: any) => {
       className="w-[90%] border-none overflow-y-hidden"
     >
       <AccordionItem value="item-1 " className="border-none overflow-y-hidden">
-        <AccordionTrigger>{props && props.listData.question}</AccordionTrigger>
+        <AccordionTrigger className="md:text-2xl">
+          {props && props.listData.question}
+        </AccordionTrigger>
         {props && props.listData.answer !== "" && (
           <AccordionContent>
             {props &&

@@ -9,8 +9,11 @@ const createNotes = async (req: Request, res: Response, next: NextFunction) => {
     }).countDocuments();
     if (count) {
       req.body.questionNumber = count + 1;
+      req.body.serialNumber.SlNumber = count + 1;
     } else {
       req.body.questionNumber = 1;
+
+      req.body.serialNumber.SlNumber = 1;
     }
 
     let data = new Notes(req.body);

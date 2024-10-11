@@ -62,7 +62,7 @@ const Page = () => {
     let d = await fetchSubjectList(payload);
     if (d?.status === 200) {
       setListData(d.data);
-      console.log(d.data);
+
       setInfo(d.info);
     } else {
       setErrorMessage("Failed to fetch data.");
@@ -74,7 +74,6 @@ const Page = () => {
   };
 
   useEffect(() => {
-    console.log("selectedSubject", selectedSubject, info);
     if (selectedSubject !== "") {
       handleOptionChange();
     }

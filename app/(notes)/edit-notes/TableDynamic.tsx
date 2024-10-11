@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, from "react";
 import {
   Table,
   TableBody,
@@ -26,7 +26,6 @@ interface TableDynamicProps {
 
 const TableDynamic = (props: TableDynamicProps) => {
   const { tableInfo, setTableInfo, link, setLink } = props;
-  console.log("tableInfo", tableInfo);
 
   const addColumn = () => {
     setTableInfo((prev) => ({
@@ -89,9 +88,7 @@ const TableDynamic = (props: TableDynamicProps) => {
     setTableInfo((prev) => ({ ...prev, body: newBody }));
   };
 
-  useEffect(() => {
-    console.log("tableInfo", tableInfo);
-  }, [tableInfo]);
+
 
   return (
     <div className="flex flex-col gap-5">

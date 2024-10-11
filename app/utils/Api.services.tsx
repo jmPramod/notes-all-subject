@@ -15,7 +15,6 @@ export const fetchSubjectList = async (payload: fetchSubjectListPayload) => {
         },
       }
     );
-    console.log("res", res);
 
     return {
       status: res?.status,
@@ -25,6 +24,7 @@ export const fetchSubjectList = async (payload: fetchSubjectListPayload) => {
       info: res.data.info,
     };
   } catch (error: any) {
+    console.log("erroe", error);
     return {
       status: error.response?.status,
       statusCode: error.response.data?.status,
@@ -41,8 +41,6 @@ export const createQuestions = async (payload: any) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log("res", res);
-
     return {
       status: res?.status,
       statusCode: res.data?.status,
@@ -50,6 +48,7 @@ export const createQuestions = async (payload: any) => {
       data: res.data.data,
     };
   } catch (error: any) {
+    console.log("erroe", error);
     return {
       status: error.response?.status,
       statusCode: error.response.data?.status,
@@ -66,7 +65,6 @@ export const fetchSubjectCategory = async () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log("res", res);
 
     return {
       status: res?.status,
@@ -89,7 +87,6 @@ export const fetchSubjectCategory = async () => {
 export const login = async (payload: { email: string; password: string }) => {
   try {
     let res = await axios.post(`${baseUrl}/login`, payload, {});
-    console.log("res", res);
 
     return {
       status: res?.status,
@@ -99,6 +96,7 @@ export const login = async (payload: { email: string; password: string }) => {
       token: res.data.token,
     };
   } catch (error: any) {
+    console.log("erroe", error);
     return {
       status: error.response?.status,
       statusCode: error.response.data?.status,
@@ -114,7 +112,6 @@ export const fetchSingleSubject = async (id: string) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log("res", res);
 
     return {
       status: res?.status,
@@ -124,6 +121,7 @@ export const fetchSingleSubject = async (id: string) => {
       info: res.data.info,
     };
   } catch (error: any) {
+    console.log("erroe", error);
     return {
       status: error.response?.status,
       statusCode: error.response.data?.status,
@@ -140,7 +138,6 @@ export const updateQuestions = async (payload: any, id: string) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log("res", res);
 
     return {
       status: res?.status,
@@ -149,6 +146,7 @@ export const updateQuestions = async (payload: any, id: string) => {
       data: res.data.data,
     };
   } catch (error: any) {
+    console.log("erroe", error);
     return {
       status: error.response?.status,
       statusCode: error.response.data?.status,

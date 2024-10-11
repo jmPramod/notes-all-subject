@@ -68,10 +68,9 @@ const Page = () => {
   const onSubmit = async (data: any) => {
     setLoading(true);
     data = { ...data, table: tableInfo, link: link };
-    console.log("Form submitted:", data);
 
     const result = await createQuestions(data);
-    console.log("send", result);
+
     if (result?.status === 200) {
       toast({
         title: result?.message,

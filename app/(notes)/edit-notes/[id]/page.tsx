@@ -21,7 +21,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  createQuestions,
   fetchSingleSubject,
   fetchSubjectCategory,
   updateQuestions,
@@ -44,6 +43,10 @@ const formSchema = z.object({
     ans: z.string().optional(),
     format: z.string().optional(),
   }),
+  serialNumber: z.object({
+    subject: z.string().optional(),
+    SlNumber: z.string().optional(),
+  }),
 });
 interface subjType {
   answer: { ans: string[]; format: string };
@@ -59,8 +62,6 @@ interface subjType {
   screenshort: string[];
 }
 const Page = ({ params }: { params: { id: string } }) => {
-  console.log(params.id);
-
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -81,6 +82,10 @@ const Page = ({ params }: { params: { id: string } }) => {
         ans: fetchedData?.ansQuery.ans,
         format: fetchedData?.ansQuery.format || "p",
       },
+      serialNumber: {
+        subject: fetchedData?.serialNumber?.subject,
+        SlNumber: fetchedData?.serialNumber?.SlNumber,
+      },
     },
   });
 
@@ -93,10 +98,9 @@ const Page = ({ params }: { params: { id: string } }) => {
   const onSubmit = async (data: any) => {
     setLoading(true);
     data = { ...data, table: tableInfo, link: link };
-    console.log("Form submitted:", data);
 
     const result = await updateQuestions(data, params.id);
-    console.log("send", result);
+
     if (result?.status === 200) {
       toast({
         title: result?.message,
@@ -131,14 +135,16 @@ const Page = ({ params }: { params: { id: string } }) => {
           ans: res.data.ansQuery.ans,
           format: res.data.ansQuery.format || "p",
         },
+        serialNumber: {
+          subject: res.data?.serialNumber?.subject,
+          SlNumber: res.data?.serialNumber?.SlNumber,
+        },
       });
     };
     fetchData();
     fetchsingleSub();
   }, []);
-  useEffect(() => {
-    console.log("fetchedData", fetchedData);
-  }, [fetchedData]);
+
   return (
     <div className="w-[80%] m-auto p-5 flex flex-col gap-9">
       <h1 className="text-2xl font-bold">Create Notes</h1>
@@ -290,6 +296,35 @@ const Page = ({ params }: { params: { id: string } }) => {
                           <SelectItem value="p">Paragraph</SelectItem>
                         </SelectContent>
                       </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex w-full gap-3">
+              <FormField
+                control={form.control}
+                name="serialNumber.subject"
+                render={({ field }) => (
+                  <FormItem className="w-1/2">
+                    <FormLabel>Query</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="Enter your Answer" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="serialNumber.SlNumber"
+                render={({ field }) => (
+                  <FormItem className="w-1/2">
+                    <FormLabel>Format</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your Answer" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

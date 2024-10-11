@@ -15,8 +15,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 const SummaryDetail = (props: any) => {
-  console.log("props,props", props.listData.table);
-
   return (
     <Accordion
       type="single"

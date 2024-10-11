@@ -46,7 +46,6 @@ const LoginPage = () => {
     setLoading(true); // Set loading to true
     setErrorMessage(""); // Reset error message
 
-    console.log("Login Submitted: ", data);
     // Handle login, e.g., API call her
     const result = await login(data);
     if (result.status === 200) {

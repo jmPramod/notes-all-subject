@@ -78,6 +78,8 @@ const Page = () => {
       });
     }
     form.reset();
+    setTableInfo({ heading: [], body: [[]] });
+    setLink([]);
     setLoading(false);
   };
 

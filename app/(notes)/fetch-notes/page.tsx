@@ -23,19 +23,11 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { PaginationPage } from "./PaginationPage";
+import { Progress } from "@/components/ui/progress"; // Import your Progress component
+import { useRouter } from "next/navigation";
 
-// {
-//     "subject":"test",
-//     "question":"name plese",
-//     "answer": { "ans": "pj", "format": "list" },
-//     "query": "",
-
-//     "questionNumber":1,
-//     "links":[]
-
-// }
-const page = () => {
-  const Text = "React";
+const Page = () => {
+  const router = useRouter();
   const [listData, setListData] = useState<any>([]);
   const [listCategory, setListCategory] = useState<any>();
   const [selectedSubject, setSelectedSubject] = useState("");
@@ -43,117 +35,166 @@ const page = () => {
   const [pageValue, setPageValue] = useState(1);
   const [pagelimit, setLimitValue] = useState(10);
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0); // Progress state
+
   const handleOptionChange = async () => {
+    setLoading(true);
+    setProgress(0); // Reset progress
+
+    // Simulate loading progress
+    const progressInterval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 90) {
+          clearInterval(progressInterval);
+          return 100; // Complete progress
+        }
+        return prev + 10; // Increment progress
+      });
+    }, 100);
+
     const payload = {
       subject: selectedSubject,
       page: pageValue,
       limit: pagelimit,
     };
+
     let d = await fetchSubjectList(payload);
     if (d?.status === 200) {
       setListData(d.data);
       console.log(d.data);
       setInfo(d.info);
+    } else {
+      setErrorMessage("Failed to fetch data.");
     }
+
+    clearInterval(progressInterval);
+    setLoading(false);
+    setProgress(100); // Ensure it reaches 100%
   };
+
   useEffect(() => {
     console.log("selectedSubject", selectedSubject, info);
-
     if (selectedSubject !== "") {
       handleOptionChange();
     }
   }, [selectedSubject, pageValue, pagelimit]);
+
   useEffect(() => {
     const fetchData = async () => {
-      let e = await fetchSubjectCategory();
+      setLoading(true);
+      setProgress(0); // Reset progress
 
+      // Simulate loading progress
+      const progressInterval = setInterval(() => {
+        setProgress((prev) => {
+          if (prev >= 90) {
+            clearInterval(progressInterval);
+            return 100; // Complete progress
+          }
+          return prev + 10; // Increment progress
+        });
+      }, 100);
+
+      let e = await fetchSubjectCategory();
       if (e?.status === 200) {
         setListCategory(e?.data);
       } else {
-        setErrorMessage(e.message || "fetching data failed. Please try again.");
+        setErrorMessage(e.message || "Fetching data failed. Please try again.");
       }
+
+      clearInterval(progressInterval);
+      setLoading(false);
+      setProgress(100); // Ensure it reaches 100%
     };
+
     fetchData();
   }, []);
-
+  const handleEdit = (id: string) => {
+    router.push(`/edit-notes/${id}`);
+  };
   return (
-    <div className="w-[95%] overflow-hidden">
-      <div className="text-center max-w-[200px]">
-        {errorMessage && (
-          <div className="text-red-500 text-center mb-4">{errorMessage}</div>
-        )}{" "}
-        <Select
-          onValueChange={setSelectedSubject} // defaultValue={field.value || "p"}
-          defaultValue={selectedSubject}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Select Subject" />
-          </SelectTrigger>
-          <SelectContent position="popper">
-            {listCategory &&
-              listCategory.map((subject: any, index: number) => (
-                <SelectItem key={index} value={subject}>
-                  {subject}
-                </SelectItem>
-              ))}{" "}
-          </SelectContent>
-        </Select>{" "}
-      </div>
-      <Table>
-        {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[150px]">Sl No</TableHead>
-            {/* <TableHead>Status</TableHead> */}
-            <TableHead>Question</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {listData.map((val: any, index: number) => (
-            <TableRow key={index}>
-              <TableCell className="font-medium ">
-                {val.questionNumber}
-              </TableCell>
-              <TableCell className="font-medium  w-full">
-                {/* {val.question} */}
-                {/* <p onClick={() => setExpand(!expand)}>hai</p> */}
-                <SummaryDetail listData={val} />
-              </TableCell>
-              {/* <TableCell
-              //  onClick={() => setExpand(!expand)}
-              >
-                arrow
-              </TableCell> */}
-              {/* <TableCell className="text-right"> */}
-              {/* {invoice.totalAmount} */}
-              {/* </TableCell> */}
-              <TableCell className=" text-right">Edit</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            {/* <TableCell className="text-right">Edit</TableCell> */}
-          </TableRow>
-        </TableFooter>
-      </Table>
-      {/* Total Page<Button>{info && info.totalPages}</Button>
-      <div className="flex  gap-5">
-        <Button>Next</Button>
-
-        <Button>Prev</Button> 
-      </div> */}
-      {info && (
-        <PaginationPage
-          info={info}
-          setLimitValue={setLimitValue}
-          setPageValue={setPageValue}
-          setInfo={setInfo}
-        />
+    <>
+      {loading ? (
+        <div className="w-full h-screen flex items-center justify-center">
+          <Progress
+            value={progress}
+            className="w-[60%] flex items-center justify-center "
+          />{" "}
+        </div>
+      ) : (
+        <div className="w-full">
+          <div className="text-center max-w-[200px] my-3">
+            {errorMessage && (
+              <div className="text-red-500 text-center mb-4">
+                {errorMessage}
+              </div>
+            )}
+            <Select
+              onValueChange={setSelectedSubject}
+              defaultValue={selectedSubject}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Subject" />
+              </SelectTrigger>
+              <SelectContent position="popper">
+                {listCategory &&
+                  listCategory.map((subject: any, index: number) => (
+                    <SelectItem key={index} value={subject}>
+                      {subject}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <Table className="p-5">
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[150px]">Sl No</TableHead>
+                <TableHead>Question</TableHead>
+                <TableHead className="text-right">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {listData.map((val: any, index: number) => (
+                <TableRow key={index}>
+                  <TableCell className="font-medium ">
+                    {val?.serialNumber?.SlNumber}
+                  </TableCell>
+                  <TableCell className="font-medium  w-full">
+                    <SummaryDetail listData={val} />
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      type="button"
+                      variant={"outline"}
+                      className="text-right"
+                      onClick={() => {
+                        handleEdit(val._id);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow>{/* Optional footer content */}</TableRow>
+            </TableFooter>
+          </Table>
+          {info && (
+            <PaginationPage
+              info={info}
+              setLimitValue={setLimitValue}
+              setPageValue={setPageValue}
+              setInfo={setInfo}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
-export default page;
+export default Page;

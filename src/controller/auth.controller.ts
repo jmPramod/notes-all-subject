@@ -47,7 +47,6 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
-    console.log("req.body", req.body);
 
     //validation
     const userExist = await Auth.findOne({ email: email });

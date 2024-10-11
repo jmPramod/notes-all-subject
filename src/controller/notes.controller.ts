@@ -21,7 +21,6 @@ const createNotes = async (req: Request, res: Response, next: NextFunction) => {
       req.body.serialNumber.SlNumber = 1;
     }
 
-    console.log("req.bosy", req.body);
     let data = new Notes(req.body);
     const result = await data.save();
 
@@ -41,7 +40,6 @@ const getNotes = async (req: Request, res: Response, next: NextFunction) => {
   const limit = parseInt(req.query.limit as string) || 10;
   try {
     const items2 = await Notes.find();
-    console.log("item2", items2, subject);
 
     const items = await Notes.find({ subject })
       .sort({ "serialNumber.SlNumber": 1 })
@@ -68,8 +66,6 @@ const getSingleNotes = async (
   next: NextFunction
 ) => {
   try {
-    console.log("req.params._id", req.params.id);
-
     const result = await Notes.findById(req.params.id);
     if (!result) {
       return next(createError(400, "Data is not present"));
@@ -87,8 +83,6 @@ const getSingleNotes = async (
 
 const editNotes = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log("req.params._id", req.params.id);
-
     const result = await Notes.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });

@@ -1,4 +1,4 @@
-import React, from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -87,8 +87,6 @@ const TableDynamic = (props: TableDynamicProps) => {
     newBody[rowIndex][cellIndex] = value;
     setTableInfo((prev) => ({ ...prev, body: newBody }));
   };
-
-
 
   return (
     <div className="flex flex-col gap-5">

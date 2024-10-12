@@ -123,17 +123,17 @@ const Page = ({ params }: { params: { id: string } }) => {
     const fetchsingleSub = async () => {
       const res = await fetchSingleSubject(params.id);
       setFetchedData(res.data);
-      setTableInfo(res.data.table);
+      setTableInfo(res.data?.table);
       form.reset({
-        subject: res.data.subject,
-        question: res.data.question,
+        subject: res.data?.subject,
+        question: res.data?.question,
         answer: {
-          ans: res.data.answer.ans[0],
-          format: res.data.answer.format || "p",
+          ans: res.data?.answer.ans[0],
+          format: res.data?.answer.format || "p",
         },
         ansQuery: {
-          ans: res.data.ansQuery.ans,
-          format: res.data.ansQuery.format || "p",
+          ans: res.data?.ansQuery.ans,
+          format: res.data?.ansQuery.format || "p",
         },
         serialNumber: {
           subject: res.data?.serialNumber?.subject,

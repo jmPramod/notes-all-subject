@@ -3,6 +3,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export const LaptopNav = () => {
   let router = useRouter();
@@ -12,7 +13,9 @@ export const LaptopNav = () => {
   };
   return (
     <div className="min-h-14 border w-full flex items-center justify-between px-2  ">
-      <h1>LOGO</h1>
+      <h1 className="py-5">
+        <Image src="/logo.png" alt="" width={80} height={80} />
+      </h1>
       <ul className="min-h-14   flex items-center justify-between gap-5  ">
         <>
           <li>

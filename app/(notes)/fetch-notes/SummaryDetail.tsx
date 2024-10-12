@@ -15,6 +15,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 const SummaryDetail = (props: any) => {
+  console.log("props", props);
+
   return (
     <Accordion
       type="single"
@@ -23,43 +25,45 @@ const SummaryDetail = (props: any) => {
     >
       <AccordionItem value="item-1 " className="border-none overflow-y-hidden">
         <AccordionTrigger className="md:text-2xl">
-          {props && props.listData.question}
+          {props.individualSubjectDataList.question &&
+            props.individualSubjectDataList.question}
         </AccordionTrigger>
-        {props && props.listData.answer !== "" && (
+        {props && props?.individualSubjectDataList?.answer !== "" && (
           <AccordionContent>
             {props &&
-              props.listData.answer.ans.map((v: any, i: number) => (
-                <div>{v}</div>
-              ))}
-            {props && props.listData.table?.heading.length > 0 && (
-              <Table>
-                <TableHeader>
-                  <TableRow>
+              props.individualSubjectDataList?.answer.ans.map(
+                (v: any, i: number) => <div>{v}</div>
+              )}
+            {props &&
+              props.individualSubjectDataList?.table?.heading.length > 0 && (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      {props &&
+                        props.individualSubjectDataList?.table?.heading?.map(
+                          (val: any, index: number) => (
+                            <>
+                              <TableHead>{val}</TableHead>
+                            </>
+                          )
+                        )}
+                    </TableRow>
+                  </TableHeader>
+                  {/* <TableBody> */}
+                  <TableBody>
                     {props &&
-                      props.listData.table?.heading?.map(
+                      props.individualSubjectDataList?.table?.body.map(
                         (val: any, index: number) => (
-                          <>
-                            <TableHead>{val}</TableHead>
-                          </>
+                          <TableRow key={index}>
+                            {val.map((v: any, i: number) => (
+                              <TableCell className="font-medium">{v}</TableCell>
+                            ))}
+                          </TableRow>
                         )
                       )}
-                  </TableRow>
-                </TableHeader>
-                {/* <TableBody> */}
-                <TableBody>
-                  {props &&
-                    props.listData.table?.body.map(
-                      (val: any, index: number) => (
-                        <TableRow key={index}>
-                          {val.map((v: any, i: number) => (
-                            <TableCell className="font-medium">{v}</TableCell>
-                          ))}
-                        </TableRow>
-                      )
-                    )}
-                </TableBody>
-              </Table>
-            )}
+                  </TableBody>
+                </Table>
+              )}
           </AccordionContent>
         )}
       </AccordionItem>

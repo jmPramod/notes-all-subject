@@ -141,7 +141,7 @@ const Page = () => {
               </SelectTrigger>
               <SelectContent position="popper">
                 {listCategory &&
-                  listCategory.map((subject: any, index: number) => (
+                  listCategory?.map((subject: any, index: number) => (
                     <SelectItem key={index} value={subject}>
                       {subject}
                     </SelectItem>
@@ -158,7 +158,7 @@ const Page = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {individualSubjectDataList.map((val: any, index: number) => (
+              {individualSubjectDataList?.map((val: any, index: number) => (
                 <TableRow key={index}>
                   <TableCell className="font-medium md:text-2xl">
                     {val?.serialNumber?.SlNumber}
@@ -181,9 +181,6 @@ const Page = () => {
                 </TableRow>
               ))}
             </TableBody>
-            <TableFooter>
-              <TableRow>{/* Optional footer content */}</TableRow>
-            </TableFooter>
           </Table>
           {info && (
             <PaginationPage

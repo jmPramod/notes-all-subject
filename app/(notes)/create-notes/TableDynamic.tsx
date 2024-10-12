@@ -38,8 +38,8 @@ const TableDynamic = (props: TableDynamicProps) => {
   const deleteColumn = () => {
     if (tableInfo.heading.length === 0) return;
     setTableInfo((prev) => {
-      const newHeading = prev.heading.slice(0, -1);
-      const newBody = prev.body.map((row) => row.slice(0, -1));
+      const newHeading = prev?.heading.slice(0, -1);
+      const newBody = prev?.body?.map((row) => row.slice(0, -1));
       return {
         heading: newHeading,
         body: newBody,
@@ -48,7 +48,7 @@ const TableDynamic = (props: TableDynamicProps) => {
   };
 
   const addRow = () => {
-    const newRow = Array(tableInfo.heading.length).fill("");
+    const newRow = Array(tableInfo?.heading.length).fill("");
     setTableInfo((prev) => ({
       ...prev,
       body: [...prev.body, newRow],
@@ -58,7 +58,7 @@ const TableDynamic = (props: TableDynamicProps) => {
   const deleteRow = (rowIndex: number) => {
     setTableInfo((prev) => ({
       ...prev,
-      body: prev.body.filter((_, index) => index !== rowIndex),
+      body: prev?.body.filter((_, index) => index !== rowIndex),
     }));
   };
 
@@ -73,7 +73,7 @@ const TableDynamic = (props: TableDynamicProps) => {
   };
 
   const handleHeaderChange = (index: number, value: string) => {
-    const newHeading = [...tableInfo.heading];
+    const newHeading = [...tableInfo?.heading];
     newHeading[index] = value;
     setTableInfo((prev) => ({ ...prev, heading: newHeading }));
   };
@@ -83,7 +83,7 @@ const TableDynamic = (props: TableDynamicProps) => {
     cellIndex: number,
     value: string
   ) => {
-    const newBody = [...tableInfo.body];
+    const newBody = [...tableInfo?.body];
     newBody[rowIndex][cellIndex] = value;
     setTableInfo((prev) => ({ ...prev, body: newBody }));
   };

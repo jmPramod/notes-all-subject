@@ -18,17 +18,17 @@ export const fetchSubjectList = async (payload: fetchSubjectListPayload) => {
 
     return {
       status: res?.status,
-      statusCode: res.data?.status,
-      message: res.data.message,
-      data: res.data.data,
-      info: res.data.info,
+      statusCode: res?.data?.status,
+      message: res?.data.message,
+      data: res?.data?.data,
+      info: res?.data.info,
     };
   } catch (error: any) {
     console.log("erroe", error);
     return {
       status: error.response?.status,
-      statusCode: error.response.data?.status,
-      message: error.response.data.message,
+      statusCode: error.response?.data?.status,
+      message: error.response?.data.message,
       data: null,
     };
   }
@@ -43,16 +43,16 @@ export const createQuestions = async (payload: any) => {
     });
     return {
       status: res?.status,
-      statusCode: res.data?.status,
-      message: res.data.message,
-      data: res.data.data,
+      statusCode: res?.data?.status,
+      message: res?.data.message,
+      data: res?.data?.data,
     };
   } catch (error: any) {
     console.log("erroe", error);
     return {
       status: error.response?.status,
-      statusCode: error.response.data?.status,
-      message: error.response.data.message,
+      statusCode: error.response?.data?.status,
+      message: error.response?.data.message,
       data: null,
     };
   }
@@ -68,17 +68,17 @@ export const fetchSubjectCategory = async () => {
 
     return {
       status: res?.status,
-      statusCode: res.data?.status,
-      message: res.data.message,
-      data: res.data.data,
+      statusCode: res?.data?.status,
+      message: res?.data.message,
+      data: res?.data?.data,
     };
   } catch (error: any) {
     console.log("erroe", error);
 
     return {
       status: error.response?.status || 500,
-      statusCode: error.response.data?.status,
-      message: error.response.data.message,
+      statusCode: error.response?.data?.status,
+      message: error.response?.data.message,
       data: null,
     };
   }
@@ -90,17 +90,17 @@ export const login = async (payload: { email: string; password: string }) => {
 
     return {
       status: res?.status,
-      statusCode: res.data?.status,
-      message: res.data.message,
-      data: res.data.data,
-      token: res.data.token,
+      statusCode: res?.data?.status,
+      message: res?.data.message,
+      data: res?.data?.data,
+      token: res?.data.token,
     };
   } catch (error: any) {
     console.log("erroe", error);
     return {
       status: error.response?.status,
-      statusCode: error.response.data?.status,
-      message: error.response.data.message,
+      statusCode: error.response?.data?.status,
+      message: error.response?.data.message,
       data: null,
     };
   }
@@ -115,17 +115,17 @@ export const fetchSingleSubject = async (id: string) => {
 
     return {
       status: res?.status,
-      statusCode: res.data?.status,
-      message: res.data.message,
-      data: res.data.data,
-      info: res.data.info,
+      statusCode: res?.data?.status,
+      message: res?.data.message,
+      data: res?.data?.data,
+      info: res?.data.info,
     };
   } catch (error: any) {
     console.log("erroe", error);
     return {
       status: error.response?.status,
-      statusCode: error.response.data?.status,
-      message: error.response.data.message,
+      statusCode: error.response?.data?.status,
+      message: error.response?.data.message,
       data: null,
     };
   }
@@ -141,16 +141,16 @@ export const updateQuestions = async (payload: any, id: string) => {
 
     return {
       status: res?.status,
-      statusCode: res.data?.status,
-      message: res.data.message,
-      data: res.data.data,
+      statusCode: res?.data?.status,
+      message: res?.data.message,
+      data: res?.data?.data,
     };
   } catch (error: any) {
     console.log("erroe", error);
     return {
       status: error.response?.status,
-      statusCode: error.response.data?.status,
-      message: error.response.data.message,
+      statusCode: error.response?.data?.status,
+      message: error.response?.data.message,
       data: null,
     };
   }

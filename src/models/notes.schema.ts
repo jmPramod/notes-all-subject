@@ -12,6 +12,7 @@ export interface Notes extends Document {
   important: string;
 
   table: { heading: string[]; body: string[][] };
+  programingLanguage: { language: string; code: string }[];
 }
 
 const notesSchema: Schema = new Schema(
@@ -36,6 +37,12 @@ const notesSchema: Schema = new Schema(
       {
         Url: { type: String },
         PublicId: { type: String, default: null },
+      },
+    ],
+    programingLanguage: [
+      {
+        language: { type: String, default: "" },
+        code: { type: String, default: "" },
       },
     ],
   },

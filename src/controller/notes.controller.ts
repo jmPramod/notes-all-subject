@@ -148,24 +148,12 @@ const getDistintSubject = async (
 // }
 async function updateDocuments() {
   try {
-    // const documents = await Notes.updateMany(
-    //   {},
-    //   { $unset: { "serialNumber.SlNumber": "" } }
-    // ); // Fetch all documents
-    // let serial = 1; // Start from 1
-
-    // for (const doc of documents) {
-    //   // Update the document with the incrementing number
-    //   doc.serialNumber = {
-    //     subject: "REACT",
-    //     SlNumber: serial, // Assign the incrementing number
-    //   };
-
-    //   await doc.save(); // Save each document
-    //   serial++; // Increment for the next document
-    // }
-
-    console.log(` documents updated successfully!`);
+    // const defaultProgrammingLanguage = [{ language: "", code: "" }];
+    // const result = await Notes.updateMany(
+    //   { programingLanguage: { $exists: true } }, // Only update documents without the field
+    //   { $set: { programingLanguage: defaultProgrammingLanguage } }
+    // );
+    // console.log(`${result.modifiedCount} documents updated successfully!`);
   } catch (error) {
     console.error("Error updating documents:", error);
   }

@@ -80,21 +80,56 @@ const getSingleNotes = async (
     next(error);
   }
 };
-
 const editNotes = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = await Notes.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const { serialNumber } = req.body;
+    const noteId = req.params.id;
+    const existingNote = await Notes.findById(noteId);
+    if (!existingNote) {
+      return res.status(404).json({ message: "Note not found", status: 404 });
+    }
+
+    const currentSlNumber = existingNote.serialNumber.SlNumber;
+
+    if (currentSlNumber !== serialNumber.SlNumber) {
+      // If moving from 10 to 12
+      if (serialNumber.SlNumber > currentSlNumber) {
+        await Notes.updateMany(
+          {
+            "serialNumber.SlNumber": {
+              $gte: currentSlNumber + 1,
+              $lte: serialNumber.SlNumber,
+            },
+          },
+          { $inc: { "serialNumber.SlNumber": -1 } }
+        );
+      } else {
+        // If moving from 12 to 10
+        await Notes.updateMany(
+          {
+            "serialNumber.SlNumber": {
+              $gte: serialNumber.SlNumber,
+              $lt: currentSlNumber,
+            },
+          },
+          { $inc: { "serialNumber.SlNumber": 1 } }
+        );
+      }
+    }
+
+    existingNote.serialNumber.SlNumber = serialNumber.SlNumber;
+    const updatedNote = await existingNote.save();
+
     res.status(200).json({
-      message: "single data Edited succefully",
-      data: result,
+      message: "Single data edited successfully",
+      data: updatedNote,
       status: 200,
     });
   } catch (error) {
     next(error);
   }
 };
+
 const deleteNotes = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await Notes.findByIdAndDelete({ _id: req.params.id });

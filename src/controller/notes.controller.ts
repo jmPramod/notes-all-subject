@@ -183,12 +183,12 @@ const getDistintSubject = async (
 // }
 async function updateDocuments() {
   try {
-    // const defaultProgrammingLanguage = [{ language: "", code: "" }];
-    // const result = await Notes.updateMany(
-    //   { programingLanguage: { $exists: true } }, // Only update documents without the field
-    //   { $set: { programingLanguage: defaultProgrammingLanguage } }
-    // );
-    // console.log(`${result.modifiedCount} documents updated successfully!`);
+    // const defaultProgrammingLanguage = [];
+    const result = await Notes.updateMany(
+      { programingLanguage: { $exists: true } }, // Only update documents without the field
+      { $set: { programingLanguage: [] } }
+    );
+    console.log(`${result.modifiedCount} documents updated successfully!`);
   } catch (error) {
     console.error("Error updating documents:", error);
   }

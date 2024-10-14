@@ -13,6 +13,8 @@ export interface Notes extends Document {
 
   table: { heading: string[]; body: string[][] };
   programingLanguage: { language: string; code: string }[];
+
+  LibOrFramework: { language: string; code: string }[];
 }
 
 const notesSchema: Schema = new Schema(
@@ -40,6 +42,12 @@ const notesSchema: Schema = new Schema(
       },
     ],
     programingLanguage: [
+      {
+        language: { type: String, default: "" },
+        code: { type: String, default: "" },
+      },
+    ],
+    LibOrFramework: [
       {
         language: { type: String, default: "" },
         code: { type: String, default: "" },

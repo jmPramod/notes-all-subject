@@ -12,9 +12,19 @@ export interface Notes extends Document {
   important: string;
 
   table: { heading: string[]; body: string[][] };
-  programingLanguage: { language: string; code: string; result: string }[];
+  programingLanguage: {
+    language: string;
+    code: string;
+    result: string;
+    title: string;
+  }[];
 
-  LibOrFramework: { language: string; code: string; result: string }[];
+  LibOrFramework: {
+    language: string;
+    code: string;
+    result: string;
+    title: string;
+  }[];
 }
 
 const notesSchema: Schema = new Schema(
@@ -46,6 +56,7 @@ const notesSchema: Schema = new Schema(
         language: { type: String, default: "" },
         code: { type: String, default: "" },
         result: { type: String, default: "" },
+        title: { type: String, default: "" },
       },
     ],
     LibOrFramework: [
@@ -53,6 +64,7 @@ const notesSchema: Schema = new Schema(
         language: { type: String, default: "" },
         code: { type: String, default: "" },
         result: { type: String, default: "" },
+        title: { type: String, default: "" },
       },
     ],
   },

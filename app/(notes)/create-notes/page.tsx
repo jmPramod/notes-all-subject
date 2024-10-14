@@ -28,6 +28,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import TableDynamic from "./TableDynamic";
 import { useEffect, useState } from "react";
+import CodeEditor from "../CodeEditor/CodeEditor";
+import HtmlEditor from "../CodeEditor/HtmlEditor";
 
 interface TableInfo {
   heading: string[];
@@ -42,13 +44,29 @@ const formSchema = z.object({
     format: z.string().optional(),
   }),
 });
+interface CodeEditorType {
+  language: string;
+  code: string;
+}
+interface libEditorType {
+  language: string;
+  code: string;
+  result: string;
+  title: string;
+}
 
 const Page = () => {
   const { toast } = useToast();
+  const [htmlCode, setHtmlCode] = useState<libEditorType[]>([
+    { code: "", language: "", result: "", title: "" },
+  ]);
+  const [languageSelected, setLanguageSelected] = useState("");
+  const [codeEditors, setCodeEditors] = useState<CodeEditorType[]>([]);
   const [loading, setLoading] = useState(false);
   const [listCategory, setListCategory] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [isAddingNewSubject, setIsAddingNewSubject] = useState(false);
+  const [code, setCode] = useState("");
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -63,11 +81,23 @@ const Page = () => {
     heading: [],
     body: [[]],
   });
+  // const [programingLanguage, setProgramingLanguage] = useState<any>([
+  //   { language: languageSelected },
+  //   { code: code },
+  // ]);
   const [link, setLink] = useState<string[]>([]);
 
   const onSubmit = async (data: any) => {
     setLoading(true);
-    data = { ...data, table: tableInfo, link: link };
+
+    data = {
+      ...data,
+      table: tableInfo,
+      link: link,
+      programingLanguage: codeEditors,
+      LibOrFramework: htmlCode,
+    };
+    console.log("data", data);
 
     const result = await createQuestions(data);
 
@@ -94,7 +124,9 @@ const Page = () => {
     };
     fetchData();
   }, []);
-
+  useEffect(() => {
+    console.log("htmlCode", htmlCode);
+  }, [htmlCode]);
   return (
     <div className="w-[80%] m-auto p-5 flex flex-col gap-9">
       <h1 className="text-2xl font-bold">Create Notes</h1>
@@ -262,6 +294,17 @@ const Page = () => {
             setLink={setLink}
             link={link}
           />
+
+          <CodeEditor
+            setLanguageSelected={setLanguageSelected}
+            languageSelected={languageSelected}
+            code={code}
+            setCode={setCode}
+            setCodeEditors={setCodeEditors}
+            codeEditors={codeEditors}
+          />
+          <HtmlEditor setHtmlCode={setHtmlCode} htmlCode={htmlCode} />
+
           <Button type="submit">{loading ? "Submitting...." : "Submit"}</Button>
         </form>
       </Form>

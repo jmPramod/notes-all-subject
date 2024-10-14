@@ -155,3 +155,38 @@ export const updateQuestions = async (payload: any, id: string) => {
     };
   }
 };
+// interface langPropsVersion {
+//   javascript: string;
+//   typescript: string;
+//   python: string;
+//   java: string;
+//   csharp: string;
+//   php: string;
+// }
+interface langPropsVersion {
+  [key: string]: string; // or whatever type the version should be
+}
+export const Language_version: langPropsVersion = {
+  javascript: "18.15.0",
+  typescript: "5.0.3",
+  python: "3.10.0",
+  java: "15.0.2",
+  csharp: "6.12.0",
+  php: "8.2.3",
+};
+const codeApi = axios.create({ baseURL: "https://emkc.org/api/v2/piston" });
+export const editorApi = async (language: string, sourceCode: string) => {
+  try {
+    const response = await codeApi.post("/execute", {
+      language: language,
+      version: Language_version[language],
+      files: [
+        {
+          name: "my_cool_code.js",
+          content: sourceCode,
+        },
+      ],
+    });
+    return response.data;
+  } catch (error) {}
+};

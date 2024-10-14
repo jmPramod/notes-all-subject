@@ -46,7 +46,7 @@ const getNotes = async (req: Request, res: Response, next: NextFunction) => {
       .skip((page - 1) * limit)
       .limit(limit);
 
-    const totalItems = await Notes.countDocuments();
+    const totalItems = await Notes.countDocuments({ subject });
     const totalPages = Math.ceil(totalItems / limit);
     const info = { page, totalPages, totalItems };
     // items.info = info;

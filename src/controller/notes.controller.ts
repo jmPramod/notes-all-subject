@@ -85,6 +85,7 @@ const editNotes = async (req: Request, res: Response, next: NextFunction) => {
     const { serialNumber } = req.body;
     const noteId = req.params.id;
     const existingNote = await Notes.findById(noteId);
+    const dataUpdated = await Notes.findByIdAndUpdate(noteId, req.body);
     if (!existingNote) {
       return res.status(404).json({ message: "Note not found", status: 404 });
     }
@@ -185,8 +186,8 @@ async function updateDocuments() {
   try {
     // const defaultProgrammingLanguage = [];
     // const result = await Notes.updateMany(
-    //   { programingLanguage: { $exists: true } }, // Only update documents without the field
-    //   { $set: { programingLanguage: [] } }
+    //   { LibOrFramework: { $exists: true } }, // Only update documents without the field
+    //   { $set: { LibOrFramework: [] } }
     // );
     // console.log(`${result.modifiedCount} documents updated successfully!`);
   } catch (error) {

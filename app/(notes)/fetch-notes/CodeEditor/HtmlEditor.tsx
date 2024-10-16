@@ -79,7 +79,9 @@ const FetchHtmlEditor = (props: PropsType) => {
 
   return (
     <div>
-      <h1 className="text-center text-2xl p-3">LIB/Framework Code</h1>
+      {htmlCode.length > 0 && (
+        <h1 className="text-center text-2xl p-3">LIB/Framework Code</h1>
+      )}
 
       <div className="my-5 flex flex-wrap">
         {htmlCode.map((val, index) => (

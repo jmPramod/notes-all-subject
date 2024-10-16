@@ -86,13 +86,12 @@ const FetchHtmlEditor = (props: PropsType) => {
       <div className="my-5 flex flex-wrap">
         {htmlCode.map((val, index) => (
           <div key={index} className="flex w-1/2 p-2">
-            {" "}
-            {/* Each takes half the width */}
             <div className=" w-full">
               {index + 1})
               <div className="flex items-center justify-between w-full gap-8">
                 <div className="flex flex-col gap-3 justify-start w-full">
                   <Input
+                    disabled
                     placeholder="Please enter language"
                     value={val.language}
                     onChange={(e) =>
@@ -100,11 +99,13 @@ const FetchHtmlEditor = (props: PropsType) => {
                     }
                   />
                   <Input
+                    disabled
                     placeholder="Title"
                     value={val.title}
                     onChange={(e) => handleTitleChange(index, e.target.value)}
                   />
                   <Input
+                    disabled
                     placeholder="Result"
                     value={val.result}
                     onChange={(e) => handleResultChange(index, e.target.value)}

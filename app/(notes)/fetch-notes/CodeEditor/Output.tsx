@@ -27,9 +27,6 @@ const Output = (props: PropsType) => {
       toast({
         title: "Error in Executing Code",
         description: stderr,
-        // action: (
-        //   <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
-        // ),
       });
     }
     setOutputRes(output);

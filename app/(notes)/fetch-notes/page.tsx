@@ -25,13 +25,13 @@ import { Button } from "@/components/ui/button";
 import { PaginationPage } from "./PaginationPage";
 import { Progress } from "@/components/ui/progress"; // Import your Progress component
 import { useRouter } from "next/navigation";
-import { subjectType } from "@/app/all.types";
-
+import { CodeEditorType, libEditorType, subjectType } from "@/app/all.types";
 const Page = () => {
   const router = useRouter();
   const [individualSubjectDataList, setIndividualSubjectDataList] = useState<
     subjectType[]
   >([]);
+
   const [listCategory, setListCategory] = useState<string[]>([]);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [info, setInfo] = useState<any>();

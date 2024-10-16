@@ -29,7 +29,9 @@ import { useToast } from "@/hooks/use-toast";
 import TableDynamic from "./TableDynamic";
 import { useEffect, useState } from "react";
 import CodeEditor from "../CodeEditor/CodeEditor";
-import HtmlEditor from "../CodeEditor/HtmlEditor";
+import CreateHtmlEditor from "./CodeEditor/HtmlEditor";
+import { programingLanguageTypes } from "@/app/all.types";
+import CreateCodeEditor from "./CodeEditor/CodeEditor";
 
 interface TableInfo {
   heading: string[];
@@ -44,24 +46,15 @@ const formSchema = z.object({
     format: z.string().optional(),
   }),
 });
-interface CodeEditorType {
+interface CodeEditor {
   language: string;
   code: string;
-}
-interface libEditorType {
-  language: string;
-  code: string;
-  result: string;
-  title: string;
 }
 
 const Page = () => {
   const { toast } = useToast();
-  const [htmlCode, setHtmlCode] = useState<libEditorType[]>([
-    { code: "", language: "", result: "", title: "" },
-  ]);
   const [languageSelected, setLanguageSelected] = useState("");
-  const [codeEditors, setCodeEditors] = useState<CodeEditorType[]>([]);
+  const [codeEditors, setCodeEditors] = useState<CodeEditor[]>([]);
   const [loading, setLoading] = useState(false);
   const [listCategory, setListCategory] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -81,23 +74,23 @@ const Page = () => {
     heading: [],
     body: [[]],
   });
-  // const [programingLanguage, setProgramingLanguage] = useState<any>([
-  //   { language: languageSelected },
-  //   { code: code },
-  // ]);
+  const [LibOrFramework, setLibOrFramework] = useState<
+    programingLanguageTypes[]
+  >([]);
+  const [programingLanguage, setProgramingLanguage] = useState<
+    programingLanguageTypes[]
+  >([]);
   const [link, setLink] = useState<string[]>([]);
 
   const onSubmit = async (data: any) => {
     setLoading(true);
-
     data = {
       ...data,
       table: tableInfo,
       link: link,
-      programingLanguage: codeEditors,
-      LibOrFramework: htmlCode,
+      programingLanguage,
+      LibOrFramework,
     };
-    console.log("data", data);
 
     const result = await createQuestions(data);
 
@@ -124,9 +117,7 @@ const Page = () => {
     };
     fetchData();
   }, []);
-  useEffect(() => {
-    console.log("htmlCode", htmlCode);
-  }, [htmlCode]);
+
   return (
     <div className="w-[80%] m-auto p-5 flex flex-col gap-9">
       <h1 className="text-2xl font-bold">Create Notes</h1>
@@ -294,17 +285,14 @@ const Page = () => {
             setLink={setLink}
             link={link}
           />
-
-          <CodeEditor
-            setLanguageSelected={setLanguageSelected}
-            languageSelected={languageSelected}
-            code={code}
-            setCode={setCode}
-            setCodeEditors={setCodeEditors}
-            codeEditors={codeEditors}
+          <CreateCodeEditor
+            setProgramingLanguage={setProgramingLanguage}
+            programingLanguage={programingLanguage}
           />
-          <HtmlEditor setHtmlCode={setHtmlCode} htmlCode={htmlCode} />
-
+          <CreateHtmlEditor
+            setLibOrFramework={setLibOrFramework}
+            LibOrFramework={LibOrFramework}
+          />
           <Button type="submit">{loading ? "Submitting...." : "Submit"}</Button>
         </form>
       </Form>
@@ -313,3 +301,12 @@ const Page = () => {
 };
 
 export default Page;
+{
+  /* <h1 className="text-center text-2xl p-3">HTML Code</h1>
+        <LiveProvider code={reactCode ? reactCode : "Enter the HTML code here"}>
+          <div className="grid grid-cols-2 gap-4">
+            <LiveEditor className="font-mono" />
+            <LivePreview />
+          </div>
+        </LiveProvider> */
+}

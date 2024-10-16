@@ -41,21 +41,18 @@ export default function CodeEditor(props: PropsType) {
     codeEditors,
     setCodeEditors,
   } = props;
+  console.log("props", props);
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const mountFn = (editor: any) => {
     editorRef.current = editor;
-    editor.focus();
+    // editor.focus();
   };
 
   useEffect(() => {
     console.log("languageSelected", languageSelected);
   }, [languageSelected]);
-
-  const handleAddEditor = () => {
-    setCodeEditors([...codeEditors, { language: "", code: "" }]);
-  };
 
   const handleAddAllCode = () => {
     if (languageSelected === "" || code === "") {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -11,6 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import CodeEditor from "../CodeEditor/CodeEditor";
+import HtmlEditor from "../CodeEditor/HtmlEditor";
+import { CodeEditorType, libEditorType } from "@/app/all.types";
 
 interface TableInfo {
   heading: string[];
@@ -26,6 +29,10 @@ interface TableDynamicProps {
 
 const TableDynamic = (props: TableDynamicProps) => {
   const { tableInfo, setTableInfo, link, setLink } = props;
+  const [htmlCode, setHtmlCode] = useState<libEditorType[]>([]);
+  const [languageSelected, setLanguageSelected] = useState("");
+  const [code, setCode] = useState("");
+  const [codeEditors, setCodeEditors] = useState<CodeEditorType[]>([]);
 
   const addColumn = () => {
     setTableInfo((prev) => ({

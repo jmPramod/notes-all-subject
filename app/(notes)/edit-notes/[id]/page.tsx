@@ -30,6 +30,8 @@ import { useToast } from "@/hooks/use-toast";
 import TableDynamic from "../TableDynamic";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import EditCodeEditor from "../CodeEditor/CodeEditor";
+import EditHtmlEditor from "../CodeEditor/HtmlEditor";
 
 interface TableInfo {
   heading: string[];
@@ -45,7 +47,7 @@ const formSchema = z.object({
   }),
   serialNumber: z.object({
     subject: z.string().optional(),
-    SlNumber: z.string().optional(),
+    SlNumber: z.number().optional(),
   }),
 });
 interface subjType {
@@ -61,6 +63,12 @@ interface subjType {
   important: string;
   screenshort: string[];
 }
+interface programingLanguageTypes {
+  language: string;
+  code: string;
+  result: string;
+  title: string;
+}
 const Page = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   const { toast } = useToast();
@@ -69,6 +77,12 @@ const Page = ({ params }: { params: { id: string } }) => {
   const [listCategory, setListCategory] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [isAddingNewSubject, setIsAddingNewSubject] = useState(false);
+  const [programingLanguage, setProgramingLanguage] = useState<
+    programingLanguageTypes[]
+  >([]);
+  const [LibOrFramework, setLibOrFramework] = useState<
+    programingLanguageTypes[]
+  >([]);
   let form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -97,10 +111,18 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   const onSubmit = async (data: any) => {
     setLoading(true);
-    data = { ...data, table: tableInfo, link: link };
+    data = {
+      ...data,
+      table: tableInfo,
+      link: link,
+      LibOrFramework,
+      programingLanguage,
+    };
+    console.log("data", data);
 
     const result = await updateQuestions(data, params.id);
 
+    console.log("result", result);
     if (result?.status === 200) {
       toast({
         title: result?.message,
@@ -124,6 +146,10 @@ const Page = ({ params }: { params: { id: string } }) => {
       const res = await fetchSingleSubject(params.id);
       setFetchedData(res.data);
       setTableInfo(res.data?.table);
+      console.log("abc", res.data);
+
+      setLibOrFramework(res.data?.LibOrFramework);
+      setProgramingLanguage(res.data?.programingLanguage);
       form.reset({
         subject: res.data?.subject,
         question: res.data?.question,
@@ -144,7 +170,9 @@ const Page = ({ params }: { params: { id: string } }) => {
     fetchData();
     fetchsingleSub();
   }, []);
-
+  useEffect(() => {
+    console.log(LibOrFramework, programingLanguage);
+  }, [LibOrFramework, programingLanguage]);
   return (
     <div className="w-[80%] m-auto p-5 flex flex-col gap-9">
       <h1 className="text-2xl font-bold">Create Notes</h1>
@@ -308,7 +336,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                 name="serialNumber.subject"
                 render={({ field }) => (
                   <FormItem className="w-1/2">
-                    <FormLabel>Query</FormLabel>
+                    <FormLabel>Subject</FormLabel>
                     <FormControl>
                       <Textarea placeholder="Enter your Answer" {...field} />
                     </FormControl>
@@ -322,9 +350,12 @@ const Page = ({ params }: { params: { id: string } }) => {
                 name="serialNumber.SlNumber"
                 render={({ field }) => (
                   <FormItem className="w-1/2">
-                    <FormLabel>Format</FormLabel>
+                    <FormLabel>Sl No</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your Answer" {...field} />
+                      <Input
+                        placeholder="Enter your Serial number"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -338,6 +369,15 @@ const Page = ({ params }: { params: { id: string } }) => {
               setLink={setLink}
               link={link}
             />
+            <EditCodeEditor
+              setProgramingLanguage={setProgramingLanguage}
+              programingLanguage={programingLanguage}
+            />
+            <EditHtmlEditor
+              setLibOrFramework={setLibOrFramework}
+              LibOrFramework={LibOrFramework}
+            />
+
             <Button type="submit">
               {loading ? "Submitting...." : "Submit"}
             </Button>

@@ -11,3 +11,19 @@ export interface subjectType {
   important: string;
   screenshort: string[];
 }
+export interface programingLanguageTypes {
+  language: string;
+  code: string;
+  result: string;
+  title: string;
+}
+export interface CodeEditorType {
+  language: string;
+  code: string;
+}
+export interface libEditorType {
+  language: string;
+  code: string;
+  result: string;
+  title: string;
+}

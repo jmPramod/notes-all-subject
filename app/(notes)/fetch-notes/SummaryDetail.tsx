@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -14,14 +14,54 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import CodeEditor from "../CodeEditor/CodeEditor";
+import HtmlEditor from "../CodeEditor/HtmlEditor";
+import {
+  CodeEditorType,
+  libEditorType,
+  programingLanguageTypes,
+} from "@/app/all.types";
+import DisabledCodeEditor from "./CodeEditor/CodeEditor";
+import DisableHtmlEditor from "./CodeEditor/HtmlEditor";
+import FetchCodeEditor from "./CodeEditor/CodeEditor";
+import FetchHtmlEditor from "./CodeEditor/HtmlEditor";
 const SummaryDetail = (props: any) => {
-  console.log("props", props);
+  // console.log("props", props);
+  const [programingLanguage, setProgramingLanguage] = useState<
+    programingLanguageTypes[]
+  >([]);
+  const [LibOrFramework, setLibOrFramework] = useState<
+    programingLanguageTypes[]
+  >([]);
 
+  const { individualSubjectDataList } = props;
+  const [htmlCode, setHtmlCode] = useState<libEditorType[]>([
+    { code: "", language: "", result: "", title: "" },
+  ]);
+
+  const [codeEditors, setCodeEditors] = useState<CodeEditorType[]>([]);
+
+  const [languageSelected, setLanguageSelected] = useState("");
+  const [code, setCode] = useState("");
+  useEffect(() => {
+    console.log(
+      "individualSubjectDataList",
+      individualSubjectDataList.LibOrFramework,
+      individualSubjectDataList.programingLanguage
+    );
+
+    setHtmlCode(
+      individualSubjectDataList && individualSubjectDataList.LibOrFramework
+    );
+    setCodeEditors(
+      individualSubjectDataList && individualSubjectDataList.programingLanguage
+    );
+  }, [individualSubjectDataList]);
   return (
     <Accordion
       type="single"
       collapsible
-      className="w-[90%] border-none overflow-y-hidden"
+      className="w-full border-none overflow-y-hidden"
     >
       <AccordionItem value="item-1 " className="border-none overflow-y-hidden">
         <AccordionTrigger className="md:text-2xl">
@@ -64,6 +104,18 @@ const SummaryDetail = (props: any) => {
                   </TableBody>
                 </Table>
               )}
+
+            <FetchCodeEditor
+              setProgramingLanguage={setProgramingLanguage}
+              programingLanguage={programingLanguage}
+              individualSubjectDataList={individualSubjectDataList}
+            />
+
+            <FetchHtmlEditor
+              setLibOrFramework={setLibOrFramework}
+              LibOrFramework={LibOrFramework}
+              individualSubjectDataList={individualSubjectDataList}
+            />
           </AccordionContent>
         )}
       </AccordionItem>

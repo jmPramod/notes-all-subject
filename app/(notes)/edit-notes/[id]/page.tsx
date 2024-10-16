@@ -47,7 +47,7 @@ const formSchema = z.object({
   }),
   serialNumber: z.object({
     subject: z.string().optional(),
-    SlNumber: z.number().optional(),
+    SlNumber: z.union([z.number(), z.string()]).optional(), // Allow both number and string
   }),
 });
 interface subjType {
@@ -117,6 +117,10 @@ const Page = ({ params }: { params: { id: string } }) => {
       link: link,
       LibOrFramework,
       programingLanguage,
+      serialNumber: {
+        ...data.serialNumber,
+        SlNumber: Number(data.serialNumber.SlNumber), // Ensure it's a number
+      },
     };
     console.log("data", data);
 

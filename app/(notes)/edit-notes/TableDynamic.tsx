@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -29,16 +29,19 @@ interface TableDynamicProps {
 
 const TableDynamic = (props: TableDynamicProps) => {
   const { tableInfo, setTableInfo, link, setLink } = props;
-  const [htmlCode, setHtmlCode] = useState<libEditorType[]>([]);
-  const [languageSelected, setLanguageSelected] = useState("");
-  const [code, setCode] = useState("");
-  const [codeEditors, setCodeEditors] = useState<CodeEditorType[]>([]);
 
+  // const addColumn = () => {
+  //   setTableInfo((prev) => ({
+  //     ...prev,
+  //     heading: [...prev.heading],
+  //     body: prev.body.map((row) => [...row, ""]),
+  //   }));
+  // };
   const addColumn = () => {
     setTableInfo((prev) => ({
       ...prev,
-      heading: [...prev.heading],
-      body: prev.body.map((row) => [...row, ""]),
+      heading: [...prev.heading, ""], // Add an empty string for the new header
+      body: prev.body.map((row) => [...row, ""]), // Append an empty cell to each row
     }));
   };
 
@@ -94,6 +97,10 @@ const TableDynamic = (props: TableDynamicProps) => {
     newBody[rowIndex][cellIndex] = value;
     setTableInfo((prev) => ({ ...prev, body: newBody }));
   };
+
+  useEffect(() => {
+    console.log("tableInfo", tableInfo);
+  }, [tableInfo]);
 
   return (
     <div className="flex flex-col gap-5">

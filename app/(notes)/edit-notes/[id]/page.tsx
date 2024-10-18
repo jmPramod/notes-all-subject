@@ -131,9 +131,12 @@ const Page = ({ params }: { params: { id: string } }) => {
       toast({
         title: result?.message,
       });
+      const slNumber = result.data.serialNumber.SlNumber;
+      const pageNumber = Math.ceil(slNumber / 10);
+
+      router.push(`/fetch-notes/${result.data.subject}/${pageNumber}`);
     }
     setLoading(false);
-    router.push("/fetch-notes");
   };
 
   useEffect(() => {

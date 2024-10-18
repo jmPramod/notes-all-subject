@@ -1,6 +1,8 @@
-import Image from "next/image";
-import CodeEditor from "./(notes)/CodeEditor/CodeEditor";
+import React from "react";
+import { FlipWordsDemo } from "./Loading/Hello/Hello";
 
-export default function Home() {
-  return <div></div>;
-}
+const page = () => {
+  return <div>{/* <FlipWordsDemo /> */}</div>;
+};
+
+export default page;

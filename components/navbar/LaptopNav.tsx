@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import SelectDropDown from "../selectDropDown/SelectDropDown";
 
 export const LaptopNav = () => {
   let router = useRouter();
@@ -18,6 +19,9 @@ export const LaptopNav = () => {
       </h1>
       <ul className="min-h-14   flex items-center justify-between gap-5  ">
         <>
+          <li>
+            <SelectDropDown />
+          </li>
           <li>
             <Button
               variant={"outline"}

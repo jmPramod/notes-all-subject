@@ -81,7 +81,9 @@ const CreateHtmlEditor = (props: PropsType) => {
               <Input
                 placeholder="Please enter language"
                 value={val.language}
-                onChange={(e) => handleLanguageChange(index, e.target.value)}
+                onChange={(e) => {
+                  handleLanguageChange(index, e.target.value);
+                }}
               />
               <Input
                 placeholder="Title"
@@ -105,6 +107,7 @@ const CreateHtmlEditor = (props: PropsType) => {
                   <LiveEditor
                     className="font-mono"
                     onChange={(newCode) => handleCodeChange(index, newCode)}
+                    key={val.code}
                   />
                 </div>
                 <LivePreview />

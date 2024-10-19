@@ -41,7 +41,7 @@ const Page = ({ params }: { params: { id: string; subject: string } }) => {
     subjectType[]
   >([]);
 
-  const [listCategory, setListCategory] = useState<string[]>([]);
+  // const [listCategory, setListCategory] = useState<string[]>([]);
   const [selectedSubject, setSelectedSubject] = useState(params.subject);
   const [info, setInfo] = useState<any>();
   const [pageValue, setPageValue] = useState(parseInt(params.id));
@@ -95,36 +95,36 @@ const Page = ({ params }: { params: { id: string; subject: string } }) => {
     }
   }, [selectedSubject, pageValue, pagelimit]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setProgress(0); // Reset progress
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setLoading(true);
+  //     setProgress(0); // Reset progress
 
-      // Simulate loading progress
-      const progressInterval = setInterval(() => {
-        setProgress((prev) => {
-          if (prev >= 90) {
-            clearInterval(progressInterval);
-            return 100; // Complete progress
-          }
-          return prev + 10; // Increment progress
-        });
-      }, 100);
+  //     // Simulate loading progress
+  //     const progressInterval = setInterval(() => {
+  //       setProgress((prev) => {
+  //         if (prev >= 90) {
+  //           clearInterval(progressInterval);
+  //           return 100; // Complete progress
+  //         }
+  //         return prev + 10; // Increment progress
+  //       });
+  //     }, 100);
 
-      let e = await fetchSubjectCategory();
-      if (e?.status === 200) {
-        setListCategory(e?.data);
-      } else {
-        setErrorMessage(e.message || "Fetching data failed. Please try again.");
-      }
+  //     let e = await fetchSubjectCategory();
+  //     if (e?.status === 200) {
+  //       setListCategory(e?.data);
+  //     } else {
+  //       setErrorMessage(e.message || "Fetching data failed. Please try again.");
+  //     }
 
-      clearInterval(progressInterval);
-      setLoading(false);
-      setProgress(100); // Ensure it reaches 100%
-    };
+  //     clearInterval(progressInterval);
+  //     setLoading(false);
+  //     setProgress(100); // Ensure it reaches 100%
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
   const handleEdit = (id: string) => {
     router.push(`/edit-notes/${id}`);
   };

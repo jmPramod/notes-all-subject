@@ -1,6 +1,6 @@
 import { ChangeWords } from "@/components/ui/change-words";
 import React from "react";
-export function FlipWordsDemo() {
+export function Hello() {
   const words = [
     "Hello",
     "Bonjour!",

@@ -15,7 +15,13 @@ export const LaptopNav = () => {
   return (
     <div className="min-h-14 border w-full flex items-center justify-between px-2  ">
       <h1 className="py-5">
-        <Image src="/logo.png" alt="" width={80} height={80} />
+        <Image
+          src="/logo.png"
+          alt=""
+          width={80}
+          height={80}
+          onClick={() => router.push("/")}
+        />
       </h1>
       <ul className="min-h-14   flex items-center justify-between gap-5  ">
         <>
@@ -31,14 +37,14 @@ export const LaptopNav = () => {
             </Button>
           </li>
 
-          <li>
+          {/* <li>
             <Button
               variant={"outline"}
               onClick={() => router.push("/fetch-notes")}
             >
               Fetch Notes
             </Button>
-          </li>
+          </li> */}
         </>
 
         <li>

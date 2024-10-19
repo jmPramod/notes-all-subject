@@ -11,9 +11,11 @@ import {
 import { fetchSubjectCategory } from "@/app/utils/Api.services";
 import { useRouter } from "next/navigation";
 
+import { usePathname } from "next/navigation";
 const SelectDropDown = () => {
   const [selectedSubject, setSelectedSubject] = useState("");
   const router = useRouter();
+  const pathname = usePathname();
   const [errorMessage, setErrorMessage] = useState("");
   const [listCategory, setListCategory] = useState<string[]>([]);
 
@@ -23,14 +25,27 @@ const SelectDropDown = () => {
       let e = await fetchSubjectCategory();
       if (e?.status === 200) {
         setListCategory(e?.data);
+
+        setErrorMessage("");
       } else {
         setErrorMessage(e.message || "Fetching data failed. Please try again.");
+        ("");
       }
       setLoading(false);
     };
-    fetchData();
+    if (listCategory.length === 0) {
+      fetchData();
+    }
   }, []);
   useEffect(() => {
+    console.log("246", pathname);
+    if (!pathname.includes("/fetch-notes/")) {
+      setSelectedSubject("");
+    }
+  }, [pathname, selectedSubject]);
+  useEffect(() => {
+    console.log("246 selectedSubject", selectedSubject);
+
     if (selectedSubject !== "") {
       router.push(`/fetch-notes/${selectedSubject}/1`);
     }

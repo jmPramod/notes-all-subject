@@ -100,6 +100,7 @@ const HtmlEditor = (props: PropsType) => {
                   <div className="flex flex-col gap-3">
                     <LiveEditor
                       className="font-mono"
+                      key={val.code}
                       onChange={(newCode) => handleCodeChange(index, newCode)}
                     />
                   </div>

@@ -104,12 +104,18 @@ const FetchHtmlEditor = (props: PropsType) => {
                     value={val.title}
                     onChange={(e) => handleTitleChange(index, e.target.value)}
                   />
-                  <Input
+                  {/* <Input
                     disabled
                     placeholder="Result"
                     value={val.result}
                     onChange={(e) => handleResultChange(index, e.target.value)}
-                  />
+                  /> */}
+                  {val.result && (
+                    <div>
+                      <b>Result:</b>
+                      {val.result}
+                    </div>
+                  )}
                   <LiveProvider code={val.code}>
                     <div className="flex flex-col gap-3">
                       <LiveEditor

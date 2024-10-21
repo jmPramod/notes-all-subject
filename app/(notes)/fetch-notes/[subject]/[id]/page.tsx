@@ -65,28 +65,10 @@ const Page = ({ params }: { params: { id: string; subject: string } }) => {
       });
     }, 100);
 
-    const payload: {
-      subject: string;
-      page: number;
-      limit: number;
-    } = {
-      subject: selectedSubject,
-      page: pageValue,
-      limit: pagelimit,
-    };
-
-    let d = await fetchSubjectList(payload);
-    if (d?.status === 200) {
-      setIndividualSubjectDataList(d.data);
-
-      setInfo(d.info);
-    } else {
-      setErrorMessage("Failed to fetch data.");
-    }
-
     clearInterval(progressInterval);
     setLoading(false);
     setProgress(100); // Ensure it reaches 100%
+    router.push(`/fetch-notes/${params.subject}/${pageValue}`);
   };
 
   useEffect(() => {
@@ -128,6 +110,29 @@ const Page = ({ params }: { params: { id: string; subject: string } }) => {
   const handleEdit = (id: string) => {
     router.push(`/edit-notes/${id}`);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const payload: {
+        subject: string;
+        page: number;
+        limit: number;
+      } = {
+        subject: selectedSubject,
+        page: pageValue,
+        limit: pagelimit,
+      };
+
+      let d = await fetchSubjectList(payload);
+      if (d?.status === 200) {
+        setIndividualSubjectDataList(d.data);
+
+        setInfo(d.info);
+      } else {
+        setErrorMessage("Failed to fetch data.");
+      }
+    };
+    fetchData();
+  }, [params.id, params.subject]);
   return (
     <>
       {loading ? (

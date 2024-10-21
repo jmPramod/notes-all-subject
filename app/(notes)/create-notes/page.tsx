@@ -32,6 +32,7 @@ import CodeEditor from "../CodeEditor/CodeEditor";
 import CreateHtmlEditor from "./CodeEditor/HtmlEditor";
 import { programingLanguageTypes } from "@/app/all.types";
 import CreateCodeEditor from "./CodeEditor/CodeEditor";
+import { useRouter } from "next/router";
 
 interface TableInfo {
   heading: string[];
@@ -53,8 +54,7 @@ interface CodeEditor {
 
 const Page = () => {
   const { toast } = useToast();
-  const [languageSelected, setLanguageSelected] = useState("");
-  const [codeEditors, setCodeEditors] = useState<CodeEditor[]>([]);
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [listCategory, setListCategory] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -98,6 +98,10 @@ const Page = () => {
       toast({
         title: result?.message,
       });
+      const slNumber = result.data.serialNumber.SlNumber;
+      const pageNumber = Math.ceil(slNumber / 10);
+
+      router.push(`/fetch-notes/${result.data.subject}/${pageNumber}`);
     }
     form.reset();
     setTableInfo({ heading: [], body: [[]] });

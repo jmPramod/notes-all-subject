@@ -32,7 +32,7 @@ import CodeEditor from "../CodeEditor/CodeEditor";
 import CreateHtmlEditor from "./CodeEditor/HtmlEditor";
 import { programingLanguageTypes } from "@/app/all.types";
 import CreateCodeEditor from "./CodeEditor/CodeEditor";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface TableInfo {
   heading: string[];

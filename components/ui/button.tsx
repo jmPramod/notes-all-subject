@@ -22,6 +22,8 @@ const buttonVariants = cva(
 
         success:
           "bg-green-500 text-white shadow hover:bg-white hover:border-2 hover:border-black hover:text-black",
+        warning:
+          "bg-red-500 text-white shadow hover:bg-white hover:border-2 hover:border-red-500 hover:text-red-500",
       },
       size: {
         default: "h-9 px-4 py-2",

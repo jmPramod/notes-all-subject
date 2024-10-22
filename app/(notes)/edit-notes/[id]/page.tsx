@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
+  deleteSingleSubject,
   fetchSingleSubject,
   fetchSubjectCategory,
   updateQuestions,
@@ -138,7 +139,17 @@ const Page = ({ params }: { params: { id: string } }) => {
     }
     setLoading(false);
   };
+  const handleDelete = async () => {
+    const result = await deleteSingleSubject(params.id);
+    console.log("result", result);
 
+    if (result.status === 200) {
+      toast({
+        title: result?.message,
+      });
+      router.push(`/`);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       let e = await fetchSubjectCategory();
@@ -182,8 +193,16 @@ const Page = ({ params }: { params: { id: string } }) => {
   }, [LibOrFramework, programingLanguage]);
   return (
     <div className="w-[80%] m-auto p-5 flex flex-col gap-9">
-      <h1 className="text-2xl font-bold">Create Notes</h1>
-
+      <div className="flex w-full items-center justify-between">
+        <h1 className="text-2xl font-bold">Edit Notes</h1>
+        <Button
+          type="button"
+          onClick={() => handleDelete()}
+          variant={"warning"}
+        >
+          delete
+        </Button>
+      </div>
       {fetchedData && (
         <Form {...form}>
           <form

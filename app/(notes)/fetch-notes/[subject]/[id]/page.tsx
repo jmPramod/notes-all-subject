@@ -9,30 +9,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-// import SummaryDetail from "./SummaryDetail";
-// import {
-//   fetchSubjectCategory,
-//   fetchSubjectList,
-// } from "../../utils/Api.services";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-// import { PaginationPage } from "./PaginationPage";
 import { Progress } from "@/components/ui/progress"; // Import your Progress component
 import { useRouter } from "next/navigation";
-import { CodeEditorType, libEditorType, subjectType } from "@/app/all.types";
+import { subjectType } from "@/app/all.types";
 import SummaryDetail from "../../SummaryDetail";
-import {
-  fetchSubjectCategory,
-  fetchSubjectList,
-} from "@/app/utils/Api.services";
+import { fetchSubjectList } from "@/app/utils/Api.services";
 import { PaginationPage } from "../../PaginationPage";
-// PaginationPage
 const Page = ({ params }: { params: { id: string; subject: string } }) => {
   console.log("id123", params.id, params.subject);
 
@@ -41,7 +24,6 @@ const Page = ({ params }: { params: { id: string; subject: string } }) => {
     subjectType[]
   >([]);
 
-  // const [listCategory, setListCategory] = useState<string[]>([]);
   const [selectedSubject, setSelectedSubject] = useState(params.subject);
   const [info, setInfo] = useState<any>();
   const [pageValue, setPageValue] = useState(parseInt(params.id));
@@ -77,36 +59,6 @@ const Page = ({ params }: { params: { id: string; subject: string } }) => {
     }
   }, [selectedSubject, pageValue, pagelimit]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     setLoading(true);
-  //     setProgress(0); // Reset progress
-
-  //     // Simulate loading progress
-  //     const progressInterval = setInterval(() => {
-  //       setProgress((prev) => {
-  //         if (prev >= 90) {
-  //           clearInterval(progressInterval);
-  //           return 100; // Complete progress
-  //         }
-  //         return prev + 10; // Increment progress
-  //       });
-  //     }, 100);
-
-  //     let e = await fetchSubjectCategory();
-  //     if (e?.status === 200) {
-  //       setListCategory(e?.data);
-  //     } else {
-  //       setErrorMessage(e.message || "Fetching data failed. Please try again.");
-  //     }
-
-  //     clearInterval(progressInterval);
-  //     setLoading(false);
-  //     setProgress(100); // Ensure it reaches 100%
-  //   };
-
-  //   fetchData();
-  // }, []);
   const handleEdit = (id: string) => {
     router.push(`/edit-notes/${id}`);
   };
@@ -150,22 +102,6 @@ const Page = ({ params }: { params: { id: string; subject: string } }) => {
                 {errorMessage}
               </div>
             )}
-            {/* <Select
-              onValueChange={setSelectedSubject}
-              defaultValue={selectedSubject}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select Subject" />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                {listCategory &&
-                  listCategory?.map((subject: any, index: number) => (
-                    <SelectItem key={index} value={subject}>
-                      {subject}
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select> */}
           </div>
           <Table className="p-5">
             <TableHeader>

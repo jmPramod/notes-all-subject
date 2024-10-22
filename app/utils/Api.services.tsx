@@ -155,14 +155,6 @@ export const updateQuestions = async (payload: any, id: string) => {
     };
   }
 };
-// interface langPropsVersion {
-//   javascript: string;
-//   typescript: string;
-//   python: string;
-//   java: string;
-//   csharp: string;
-//   php: string;
-// }
 interface langPropsVersion {
   [key: string]: string; // or whatever type the version should be
 }
@@ -189,4 +181,30 @@ export const editorApi = async (language: string, sourceCode: string) => {
     });
     return response.data;
   } catch (error) {}
+};
+
+export const deleteSingleSubject = async (id: string) => {
+  try {
+    let res = await axios.delete(`${baseUrl}/delete-notes/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    return {
+      status: res?.status,
+      statusCode: res?.data?.status,
+      message: res?.data.message,
+      data: res?.data?.data,
+      info: res?.data.info,
+    };
+  } catch (error: any) {
+    console.log("erroe", error);
+    return {
+      status: error.response?.status,
+      statusCode: error.response?.data?.status,
+      message: error.response?.data.message,
+      data: null,
+    };
+  }
 };

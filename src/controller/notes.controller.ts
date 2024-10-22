@@ -133,9 +133,24 @@ const editNotes = async (req: Request, res: Response, next: NextFunction) => {
 
 const deleteNotes = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const noteToDelete = await Notes.findById(req.params.id);
+
+    // Get the SlNumber of the note to be deleted
+
     const result = await Notes.findByIdAndDelete({ _id: req.params.id });
+
     if (!result) {
       return next(createError(400, "Data is not present"));
+    }
+    let slNumberToDelete = null;
+    if (noteToDelete) {
+      slNumberToDelete = noteToDelete.serialNumber.SlNumber;
+    }
+    if (slNumberToDelete) {
+      await Notes.updateMany(
+        { "serialNumber.SlNumber": { $gt: slNumberToDelete } },
+        { $inc: { "serialNumber.SlNumber": -1 } }
+      );
     }
     res.status(200).json({
       message: "Question and  Ans  deleted  successfully.",
@@ -163,25 +178,6 @@ const getDistintSubject = async (
     });
   } catch (error) {}
 };
-
-// async function updateDocuments() {
-//   try {
-//     const documents = await Notes.find(); // Fetch all documents
-//     let serial = 1; // Start from 1
-//     for (const doc of documents) {
-//       // Update the document with the incrementing number
-//       doc.serialNumber = {
-//         subject: "REACT",
-//         SlNumber: serial, // Assign the incrementing number
-//       };
-//       await doc.save(); // Save each document
-//       serial++; // Increment for the next document
-//     }
-//     console.log(`${documents.length} documents updated successfully!`);
-//   } catch (error) {
-//     console.error("Error updating documents:", error);
-//   }
-// }
 async function updateDocuments() {
   try {
     // const defaultProgrammingLanguage = [];

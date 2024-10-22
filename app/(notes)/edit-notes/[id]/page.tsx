@@ -33,6 +33,16 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import EditCodeEditor from "../CodeEditor/CodeEditor";
 import EditHtmlEditor from "../CodeEditor/HtmlEditor";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 
 interface TableInfo {
   heading: string[];
@@ -193,178 +203,79 @@ const Page = ({ params }: { params: { id: string } }) => {
   }, [LibOrFramework, programingLanguage]);
   return (
     <div className="w-[80%] m-auto p-5 flex flex-col gap-9">
-      <div className="flex w-full items-center justify-between">
-        <h1 className="text-2xl font-bold">Edit Notes</h1>
-        <Button
+      <Dialog>
+        <div className="flex w-full items-center justify-between">
+          <h1 className="text-2xl font-bold">Edit Notes</h1>
+          {/* <Button
           type="button"
           onClick={() => handleDelete()}
           variant={"warning"}
         >
           delete
-        </Button>
-      </div>
-      {fetchedData && (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-9"
-          >
-            {/* Subject Field */}
-            <FormField
-              control={form.control}
-              name="subject"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Subject</FormLabel>
-                  <FormControl>
-                    {!isAddingNewSubject ? (
-                      <div className="flex items-center">
-                        <Input
-                          placeholder="Enter new subject"
-                          {...field}
-                          onChange={(e) => {
-                            field.onChange(e);
-                          }}
-                        />
-                        <Button
-                          type="button"
-                          onClick={() => setIsAddingNewSubject(true)}
-                          className="ml-2"
-                          variant="outline"
-                        >
-                          ✖
-                        </Button>
-                      </div>
-                    ) : (
-                      <Select
-                        onValueChange={(value) => {
-                          if (value === "new") {
-                            setIsAddingNewSubject(false);
-                            field.onChange(value);
-                          } else {
-                            field.onChange(""); // Clear value to allow new input
-                          }
-                        }}
-                        defaultValue={
-                          fetchedData?.subject && fetchedData?.subject
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select subject" />
-                        </SelectTrigger>
-                        <SelectContent position="popper">
-                          {listCategory?.map((category, index) => (
-                            <SelectItem key={index} value={category}>
-                              {category}
-                            </SelectItem>
-                          ))}
-                          <SelectItem value="new">Change Subject</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    )}
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="question"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Question</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your question" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex w-full gap-3">
+        </Button> */}
+          <DialogTrigger asChild>
+            <Button variant={"warning"}>Delete</Button>
+          </DialogTrigger>
+        </div>
+        {fetchedData && (
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex flex-col gap-9"
+            >
+              {/* Subject Field */}
               <FormField
                 control={form.control}
-                name="answer.ans"
+                name="subject"
                 render={({ field }) => (
-                  <FormItem className="w-1/2">
-                    <FormLabel>Answers</FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="Enter your Answer" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="answer.format"
-                render={({ field }) => (
-                  <FormItem className="w-1/2">
-                    <FormLabel>Format</FormLabel>
-                    <FormControl>
-                      <Select onValueChange={field.onChange}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select format" />
-                        </SelectTrigger>
-                        <SelectContent position="popper">
-                          <SelectItem value="li">List</SelectItem>
-                          <SelectItem value="p">Paragraph</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="flex w-full gap-3">
-              <FormField
-                control={form.control}
-                name="ansQuery.ans"
-                render={({ field }) => (
-                  <FormItem className="w-1/2">
-                    <FormLabel>Query</FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="Enter your Answer" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="ansQuery.format"
-                render={({ field }) => (
-                  <FormItem className="w-1/2">
-                    <FormLabel>Format</FormLabel>
-                    <FormControl>
-                      <Select onValueChange={field.onChange}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select format" />
-                        </SelectTrigger>
-                        <SelectContent position="popper">
-                          <SelectItem value="li">List</SelectItem>
-                          <SelectItem value="p">Paragraph</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="flex w-full gap-3">
-              <FormField
-                control={form.control}
-                name="serialNumber.subject"
-                render={({ field }) => (
-                  <FormItem className="w-1/2">
+                  <FormItem>
                     <FormLabel>Subject</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Enter your Answer" {...field} />
+                      {!isAddingNewSubject ? (
+                        <div className="flex items-center">
+                          <Input
+                            placeholder="Enter new subject"
+                            {...field}
+                            onChange={(e) => {
+                              field.onChange(e);
+                            }}
+                          />
+                          <Button
+                            type="button"
+                            onClick={() => setIsAddingNewSubject(true)}
+                            className="ml-2"
+                            variant="outline"
+                          >
+                            ✖
+                          </Button>
+                        </div>
+                      ) : (
+                        <Select
+                          onValueChange={(value) => {
+                            if (value === "new") {
+                              setIsAddingNewSubject(false);
+                              field.onChange(value);
+                            } else {
+                              field.onChange(""); // Clear value to allow new input
+                            }
+                          }}
+                          defaultValue={
+                            fetchedData?.subject && fetchedData?.subject
+                          }
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select subject" />
+                          </SelectTrigger>
+                          <SelectContent position="popper">
+                            {listCategory?.map((category, index) => (
+                              <SelectItem key={index} value={category}>
+                                {category}
+                              </SelectItem>
+                            ))}
+                            <SelectItem value="new">Change Subject</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      )}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -373,43 +284,162 @@ const Page = ({ params }: { params: { id: string } }) => {
 
               <FormField
                 control={form.control}
-                name="serialNumber.SlNumber"
+                name="question"
                 render={({ field }) => (
-                  <FormItem className="w-1/2">
-                    <FormLabel>Sl No</FormLabel>
+                  <FormItem>
+                    <FormLabel>Question</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Enter your Serial number"
-                        {...field}
-                      />
+                      <Input placeholder="Enter your question" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-            </div>
+              <div className="flex w-full gap-3">
+                <FormField
+                  control={form.control}
+                  name="answer.ans"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2">
+                      <FormLabel>Answers</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="Enter your Answer" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <TableDynamic
-              tableInfo={tableInfo}
-              setTableInfo={setTableInfo}
-              setLink={setLink}
-              link={link}
-            />
-            <EditCodeEditor
-              setProgramingLanguage={setProgramingLanguage}
-              programingLanguage={programingLanguage}
-            />
-            <EditHtmlEditor
-              setLibOrFramework={setLibOrFramework}
-              LibOrFramework={LibOrFramework}
-            />
+                <FormField
+                  control={form.control}
+                  name="answer.format"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2">
+                      <FormLabel>Format</FormLabel>
+                      <FormControl>
+                        <Select onValueChange={field.onChange}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select format" />
+                          </SelectTrigger>
+                          <SelectContent position="popper">
+                            <SelectItem value="li">List</SelectItem>
+                            <SelectItem value="p">Paragraph</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-            <Button type="submit">
-              {loading ? "Submitting...." : "Submit"}
+              <div className="flex w-full gap-3">
+                <FormField
+                  control={form.control}
+                  name="ansQuery.ans"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2">
+                      <FormLabel>Query</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="Enter your Answer" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="ansQuery.format"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2">
+                      <FormLabel>Format</FormLabel>
+                      <FormControl>
+                        <Select onValueChange={field.onChange}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select format" />
+                          </SelectTrigger>
+                          <SelectContent position="popper">
+                            <SelectItem value="li">List</SelectItem>
+                            <SelectItem value="p">Paragraph</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="flex w-full gap-3">
+                <FormField
+                  control={form.control}
+                  name="serialNumber.subject"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2">
+                      <FormLabel>Subject</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="Enter your Answer" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="serialNumber.SlNumber"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2">
+                      <FormLabel>Sl No</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your Serial number"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <TableDynamic
+                tableInfo={tableInfo}
+                setTableInfo={setTableInfo}
+                setLink={setLink}
+                link={link}
+              />
+              <EditCodeEditor
+                setProgramingLanguage={setProgramingLanguage}
+                programingLanguage={programingLanguage}
+              />
+              <EditHtmlEditor
+                setLibOrFramework={setLibOrFramework}
+                LibOrFramework={LibOrFramework}
+              />
+
+              <Button type="submit">
+                {loading ? "Submitting...." : "Submit"}
+              </Button>
+            </form>
+          </Form>
+        )}
+
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Are you Sure you want to delete?</DialogTitle>
+            <DialogDescription>
+              Once deleted you cant retive it again{" "}
+            </DialogDescription>
+          </DialogHeader>
+          <div className=""></div>
+          <DialogFooter>
+            <Button type="button" onClick={() => handleDelete()}>
+              Delete permanently
             </Button>
-          </form>
-        </Form>
-      )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

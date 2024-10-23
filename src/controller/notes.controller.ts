@@ -89,7 +89,7 @@ const editNotes = async (req: Request, res: Response, next: NextFunction) => {
     if (!existingNote) {
       return res.status(404).json({ message: "Note not found", status: 404 });
     }
-
+    const subject = existingNote.serialNumber.subject; // Get the subject
     const currentSlNumber = existingNote.serialNumber.SlNumber;
 
     if (currentSlNumber !== serialNumber.SlNumber) {
@@ -101,6 +101,7 @@ const editNotes = async (req: Request, res: Response, next: NextFunction) => {
               $gte: currentSlNumber + 1,
               $lte: serialNumber.SlNumber,
             },
+            "serialNumber.subject": subject, // Filter by subject
           },
           { $inc: { "serialNumber.SlNumber": -1 } }
         );
@@ -112,6 +113,7 @@ const editNotes = async (req: Request, res: Response, next: NextFunction) => {
               $gte: serialNumber.SlNumber,
               $lt: currentSlNumber,
             },
+            "serialNumber.subject": subject, // Filter by subject
           },
           { $inc: { "serialNumber.SlNumber": 1 } }
         );
